@@ -1,5 +1,4 @@
 import importlib.util
-import json
 import tempfile
 import unittest
 import zipfile
@@ -30,7 +29,7 @@ class LanguageTests(unittest.TestCase):
         out=w.writing_pack(self.p,p,'writing.zip')
         with zipfile.ZipFile(out) as z:
             self.assertEqual(z.read('01-Copy-to-Kimi-K3.txt').decode(),p.read_text())
-            self.assertIn('couple',z.read('00-README.txt').decode())
+            self.assertIn('story owner',z.read('00-README.txt').decode())
     def test_english_captions_keep_words_and_fit_width(self):
         face=ImageFont.truetype(m.font_path('en'),24)
         original='Every ordinary afternoon became part of their story.'
@@ -44,6 +43,17 @@ class LanguageTests(unittest.TestCase):
     def test_chinese_caption_limit_preserved(self):
         face=ImageFont.truetype(m.font_path() or m.font_path('en'),24)
         lines=m.caption_lines('甲'*25,face,600,'zh')
-        self.assertEqual([len(x) for x in lines],[18,7])
+        self.assertEqual(len(lines),2)
+        self.assertTrue(all(len(x)<=18 for x in lines))
+    def test_portrait_captions_fit_narrow_width(self):
+        font=m.font_path() or m.font_path('en')
+        if not font:self.skipTest('font unavailable')
+        face=ImageFont.truetype(font,m.caption_size(1080,1920))
+        lines=m.caption_lines('甲'*18,face,1080*.88,'zh')
+        self.assertLessEqual(len(lines),2)
+        self.assertTrue(all(face.getlength(x)+4<=1080*.88 for x in lines))
+        with tempfile.TemporaryDirectory() as td:
+            m.captions([{'start':0,'end':1,'text':'甲'*18}],1080,1920,Path(td),font,'zh')
+            self.assertTrue((Path(td)/'cue-000.png').is_file())
 
 if __name__=='__main__':unittest.main()

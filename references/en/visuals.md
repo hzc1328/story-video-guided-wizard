@@ -6,9 +6,9 @@
 
 For each shot record ID, fact source, corresponding narration, final timeline range, period, location, identities and references, style, first frame, core action, end frame, transition and return checks. Use real approved narration timing including pauses; generated source duration is not the same as the used edit duration.
 
-One narrative purpose per shot. Incidental motion is fine, but reduce repeated handoffs, complex rotations and choreography with many people. Split a difficult event into simpler framing without rewriting what happened. Style follows the couple's card: distinguish recognizable real people in a stylized environment from fully animated characters. Translate references into lighting, color, material and depth, not a dependency on another private skill. Do not impose one culture, campus setting or fixed visual style on every order.
+One narrative purpose per shot. Incidental motion is fine, but reduce repeated handoffs, complex rotations and choreography with many people. Split a difficult event into simpler framing without rewriting what happened. Style follows the story card: distinguish recognizable real people in a stylized environment from fully animated characters. Translate references into lighting, color, material and depth, not a dependency on another private skill. Do not impose one culture, campus setting or fixed visual style on every order.
 
-Identity comes from the couple's actual photos. Explicitly map each person to references; request clear individual photos when a group image is ambiguous. Confirm age period, clothing and important props. Every shot showing a real person needs their corresponding reference.
+Identity comes from the actual photos of the people involved. Explicitly map each person to references; request clear individual photos when a group image is ambiguous. Confirm age period, clothing and important props. Every shot showing a real person needs their corresponding reference.
 
 ## Steps 7–8: manual generation in external GPT only
 

@@ -1,0 +1,20 @@
+[project]
+name = "story-video-guided-wizard"
+version = "0.2.0"
+description = "Guided, receipt-bound workflow for a real custom story video — wedding, proposal, anniversary, birthday, first birthday, graduation, growing up, travel, pet, family, career, brand and more."
+requires-python = ">=3.10"
+dependencies = ["Pillow==12.2.0"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 240
+extend-exclude = ["tests/*.cjs"]
+
+[tool.ruff.lint]
+select = ["F"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+check_untyped_defs = false
+warn_unused_ignores = false

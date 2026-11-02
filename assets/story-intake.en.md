@@ -1,6 +1,8 @@
-# Wedding story card
+# Story card · Wedding edition
 
 [中文](story-intake.md) | **English**
+
+Choose a theme first; the questions adapt to it. The web version `story-intake.html` ships 12 themes: Wedding, Proposal, Anniversary, Birthday, First birthday, Graduation, Growing up, Travel, Pet, Family, Career and Brand/Product. This file is the wedding edition in plain text for chat-based intake; use the web version to switch themes, or let the creator run the same five-act structure in conversation.
 
 Fill in this template and send it to your creator in your usual messaging app, or open `story-intake.html` and select English for one-click copying. Desktop is recommended; mobile works too. Photos are sent separately. No phone number, account or backend submission is required.
 

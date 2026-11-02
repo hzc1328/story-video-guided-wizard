@@ -8,6 +8,17 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 
+def can_symlink():
+    with tempfile.TemporaryDirectory() as td:
+        try:
+            target=Path(td)/'target';target.write_text('x')
+            (Path(td)/'link').symlink_to(target)
+            return True
+        except (OSError,NotImplementedError):
+            return False
+
+SYMLINKS=can_symlink()
+
 class WizardTests(unittest.TestCase):
     def setUp(self):
         spec = importlib.util.spec_from_file_location('wizard', ROOT/'scripts/wizard.py')
@@ -56,8 +67,9 @@ class WizardTests(unittest.TestCase):
     def test_paths_cannot_escape_project(self):
         outside=Path(self.tmp.name)/'private.txt'; outside.write_text('private')
         with self.assertRaises(ValueError): self.w.prepare(self.p,1,[outside])
-        (self.p/'link.txt').symlink_to(outside)
-        with self.assertRaises(ValueError): self.w.prepare(self.p,1,[self.p/'link.txt'])
+        if SYMLINKS:
+            (self.p/'link.txt').symlink_to(outside)
+            with self.assertRaises(ValueError): self.w.prepare(self.p,1,[self.p/'link.txt'])
 
     def test_init_wont_overwrite(self):
         with self.assertRaises(ValueError): self.w.init(self.p)
@@ -125,5 +137,62 @@ class WizardTests(unittest.TestCase):
         self.assertEqual(self.w.route('image',True),'external-gpt-manual')
         self.assertEqual(self.w.route('image-edit',True),'external-gpt-manual')
         self.assertEqual(self.w.route('voice',True),'api-if-authorized')
+
+    def test_broken_structured_deliverables_fail_before_approval(self):
+        for n in range(1,6): self.pass_step(n)
+        bad=self.artifact('SHOT_PLAN.json',json.dumps({'shots':[]}))
+        with self.assertRaises(ValueError): self.w.prepare(self.p,6,[bad])
+        plan=self.artifact('SHOT_PLAN.json',json.dumps({'shots':[{'id':'S01'},{'id':'S01'}]}))
+        with self.assertRaises(ValueError): self.w.prepare(self.p,6,[plan])
+        self.assertEqual(self.w.load(self.p)['steps']['6']['status'],'not_started')
+
+    def test_stat_cache_avoids_rehash_and_still_detects_change(self):
+        from unittest.mock import patch
+        self.pass_step(1)
+        record=self.w.load(self.p)['steps']['1']
+        with patch.object(self.w,'sha',side_effect=AssertionError('hash should be cached')):
+            self.w.check_artifacts(self.p,record)
+        (self.p/'step1.txt').write_text('发生变化，长度也不同')
+        with self.assertRaises(ValueError):self.w.check_artifacts(self.p,record)
+
+    def test_reopen_rejects_not_started_step(self):
+        with self.assertRaises(ValueError): self.w.reopen(self.p,1,[],'合成测试：尚未开始')
+
+    def test_steps_config_is_single_source(self):
+        self.assertEqual(self.w.TOTAL,14)
+        self.assertEqual(len(self.w.STEPS),len(self.w.STEPS_EN))
+        self.assertEqual(self.w.required(3),{'owner'})
+        self.assertEqual(self.w.required(14),{'producer','owner'})
+
+    def test_state_lock_blocks_concurrent_mutation_and_clears(self):
+        guard=self.p/'.state.lock';guard.write_text('{}')
+        with self.assertRaises(ValueError):
+            with self.w.lock(self.p,timeout=.2):pass
+        guard.unlink()
+        f=self.artifact();self.w.prepare(self.p,1,[f])
+        self.assertFalse(guard.exists())
+
+    def test_stale_lock_is_reclaimed(self):
+        import os,time
+        f=self.artifact();guard=self.p/'.state.lock';guard.write_text('{}')
+        old=time.time()-120;os.utime(guard,(old,old))
+        self.w.prepare(self.p,1,[f])
+        self.assertFalse(guard.exists())
+        self.assertEqual(self.w.load(self.p)['steps']['1']['status'],'awaiting_confirmation')
+
+    def test_v1_state_migrates_language_and_version(self):
+        state_file=self.p/'PROJECT_STATE.json'
+        s=json.loads(state_file.read_text(encoding='utf-8'))
+        s['schema_version']=1;s.pop('language');s.pop('content_language')
+        state_file.write_text(json.dumps(s,ensure_ascii=False),encoding='utf-8')
+        migrated=self.w.load(self.p)
+        self.assertEqual(migrated['schema_version'],2)
+        self.assertEqual(migrated['language'],'zh')
+        self.assertEqual(migrated['content_language'],'zh')
+
+    def test_summary_data_shape(self):
+        d=self.w.summary_data(self.p)
+        self.assertEqual((d['current_step'],d['total'],d['status'],d['completed'],d['remaining']),(1,14,'not_started',False,13))
+        self.assertEqual(d['schema_version'],2)
 
 if __name__ == '__main__': unittest.main()

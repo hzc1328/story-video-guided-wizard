@@ -20,7 +20,7 @@ Check missing/repeated/extra words, pronunciation, delivery, breathing and true 
 
 Recommend Suno V5.5 when the selected service actually offers it. Use an already configured and authorized music API, or provide complete prompts for external generation and receive the audio back. A Suno product version does not imply a public API: verify provider documentation, fields, authentication, version and extension capabilities. The package does not bundle a guessed third-party music endpoint. User-supplied music follows the same review process.
 
-Map the full narration into opening, development, emotional turns and ending, noting actual time ranges, intensity, density and silence. Offer about three genuinely different styles suited to this story, not three fixed presets for every couple. Default to instrumental music that leaves room for speech, with no intrusive lead melody or abrupt drums. Use lyrics only when specifically requested.
+Map the full narration into opening, development, emotional turns and ending, noting actual time ranges, intensity, density and silence. Offer about three genuinely different styles suited to this story, not three fixed presets for every story. Default to instrumental music that leaves room for speech, with no intrusive lead melody or abrupt drums. Use lyrics only when specifically requested.
 
 Each external prompt must include this story's emotional course, musical style, instrumentation, sense of pace, target duration, development, speech space, natural ending and instrumental requirement. Timings are creative guidance, not a guarantee that a generator obeys exact seconds. Listen to returned music before deciding on cuts, extensions or regeneration.
 

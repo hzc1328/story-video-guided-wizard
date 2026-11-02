@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>婚礼故事采集卡</title>
+<title>故事采集卡</title>
 
 <style>
 :root{
@@ -96,25 +96,11 @@ textarea{min-height:64px;resize:vertical}
 .check input[type=checkbox]{width:16px;height:16px;accent-color:var(--lamp);margin:0}
 .check input[type=text]{padding:6px 10px;font-size:13.5px}
 
-/* 照片 */
-.photos{margin-left:2.2em;display:grid;gap:12px}
-.drop{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px dashed var(--line);border-radius:8px;background:var(--panel)}
-.drop input[type=file]{position:absolute;opacity:0;width:1px;height:1px}
-.drop .pick{padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);cursor:pointer;font-size:13.5px;white-space:nowrap}
-.drop .pick:hover{border-color:var(--ink-3)}
-.drop .txt{font-size:13px;color:var(--ink-2);flex:1}
-.drop .txt b{color:var(--ink);font-weight:500}
-.thumbs{display:flex;gap:10px;flex-wrap:wrap}
-.thumb{position:relative;width:96px;height:96px;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:var(--line-2)}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.thumb button{position:absolute;top:4px;right:4px;width:22px;height:22px;border:0;border-radius:50%;background:rgba(30,35,51,.75);color:#fff;font-size:13px;line-height:22px;cursor:pointer;padding:0}
-.thumb .tag{position:absolute;left:0;right:0;bottom:0;background:rgba(30,35,51,.65);color:#fff;font-size:11px;padding:2px 6px}
-
 .card{position:sticky;top:64px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
 .card-h{padding:14px 16px 12px;border-bottom:1px solid var(--line-2)}
 .card-h h3{font-size:16px}
 .card-h p{margin:4px 0 0;font-size:12.5px;color:var(--ink-2)}
-.acts{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.acts-chips{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 .act{font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink-3);background:var(--paper)}
 .act.on{border-color:var(--lamp);color:var(--lamp-ink);background:var(--lamp-soft)}
 .card-b{padding:14px 16px;font-size:12.5px;line-height:1.75;white-space:pre-wrap;word-break:break-all}
@@ -127,7 +113,7 @@ textarea{min-height:64px;resize:vertical}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(8px);background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;z-index:20;max-width:90vw}
 .toast.show{opacity:1;transform:translateX(-50%)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-@media (max-width:600px){.row.two{grid-template-columns:1fr}.bar-in{padding:10px 16px}.wrap{padding:24px 16px 80px}.intro h2{font-size:24px}.chip.other input[type=text]{width:100%}.drop{flex-direction:column;align-items:stretch}}
+@media (max-width:600px){.row.two{grid-template-columns:1fr}.bar-in{padding:10px 16px}.wrap{padding:24px 16px 80px}.intro h2{font-size:24px}.chip.other input[type=text]{width:100%}}
 @media (max-width:600px){input[type=text],textarea{font-size:16px}.bar .prog{order:3;width:100%;justify-content:center}}
 html[lang="en"] .card-b{word-break:normal;overflow-wrap:anywhere}
 #langToggle{text-decoration:none;color:var(--ink)}
@@ -136,102 +122,35 @@ html[lang="en"] .card-b{word-break:normal;overflow-wrap:anywhere}
 <body>
 
 <div class="bar"><div class="bar-in">
-  <h1>婚礼故事采集卡</h1>
+  <h1 id="appTitle">故事采集卡</h1>
   <span class="sp"></span>
   <a class="btn" id="langToggle" href="?lang=en" aria-label="Switch language">English</a>
-  <span class="prog" id="prog"><span class="track"><span class="fill" id="fill"></span></span><span id="progt">必答 0 / 18</span></span>
+  <span class="prog" id="prog"><span class="track"><span class="fill" id="fill"></span></span><span id="progt" aria-live="polite">必答 0 / 1</span></span>
   <button class="btn" id="btnClear" type="button">清空</button>
 </div></div>
 
 <div class="wrap">
 <main>
-  <div class="intro"><p>填好后点「复制故事卡」，通过微信等方式发回制作方。推荐电脑填写，手机也可以。下面的例子只是填写提示，请只写你们的真实经历；没有、记不清或不想呈现的，选「其他」并说明，细节栏也可如实填写。</p><p>文字草稿仅保存在当前浏览器；不收集手机号，不向后台提交。照片原图请在聊天中另发。</p></div>
-  <section id="s0">
-    <div class="eyebrow"><span>基本信息</span></div>
-    <h2>先认识一下<small>全部必答</small></h2>
+  <div class="intro"><p>填好后点「复制故事卡」，通过微信等方式发回制作方。推荐电脑填写，手机也可以。下面的例子只是填写提示，请只写真实经历；没有、记不清或不想呈现的，选「其他」并说明，细节栏也可如实填写。文案、图片和视频由制作方用 AI 工具完成，这张卡只负责把故事讲清楚。</p><p>文字草稿仅保存在当前浏览器；不收集手机号，不向后台提交。照片原图请在聊天中另发。</p></div>
 
+  <section id="sTheme">
+    <div class="eyebrow"><span>第一步</span></div>
+    <h2>这部片子讲谁的故事<small>先选题材，问题会按题材生成</small></h2>
     <div class="q">
-      <div class="q-h"><span class="q-n">1</span><span class="q-t">视频尺寸</span></div>
-      <div class="chips" id="ratio"></div>
-    </div>
-    <div class="q">
-      <div class="q-h"><span class="q-n">2</span><span class="q-t">两人在视频里怎么称呼</span></div>
-      <div class="row two">
-        <div class="field"><label for="groom">新郎</label><input type="text" id="groom" placeholder="例：阿远"></div>
-        <div class="field"><label for="bride">新娘</label><input type="text" id="bride" placeholder="例：小雨"></div>
-      </div>
-    </div>
-    <div class="q">
-      <div class="q-h"><span class="q-n">3</span><span class="q-t">照片</span></div>
-      <div class="row"><p class="why">请把两人清晰的正脸合照或各自单人照，通过微信等方式另发给制作方。刚认识时、婚纱或试妆的照片也可以补充。此处不上传照片。</p></div>
-      <div class="hint">自拍是广角近距离，脸会比真人略宽，生成的画面会照着画。能再给一张别人拍的合照更好。</div>
-    </div>
-    <div class="q">
-      <div class="q-h"><span class="q-n">4</span><span class="q-t">在哪个环节播放</span></div>
-      <div class="q-sub">决定结尾旁白怎么落、配乐快慢：暖场留一步给仪式，仪式中直接落到誓言，宴会开场更轻快、可以带一句给来宾。</div>
-      <div class="chips" id="occasion"></div>
-    </div>
-    <div class="q">
-      <div class="q-h"><span class="q-n">5</span><span class="q-t">时长</span></div>
-      <div class="q-sub">先选希望的片长，五幕按故事轻重分配；具体镜头根据后续旁白的实际节奏安排。</div>
-      <div class="chips" id="duration"></div>
-    </div>
-    <div class="q">
-      <div class="q-h"><span class="q-n">6</span><span class="q-t">画风</span></div>
-      <div class="chips" id="style"></div>
-      <div class="sub" id="styleSub" hidden>
-        <div class="q-h"><span class="q-t">这个画风里，两个人怎么出现</span></div>
-        <div class="chips" id="styleMode"></div>
-        <div class="hint" style="margin-left:0">"真人出镜"：脸和身材按照片来，环境和质感是动画；"纯动画"：两人也画成动画形象；画风选了"其他"且是写实的，选"写实真人"。这一项直接决定生图提示词怎么写。</div>
-      </div>
+      <div class="q-h"><span class="q-n">1</span><span class="q-t">题材</span></div>
+      <div class="chips" id="theme"></div>
     </div>
   </section>
 
-  <div id="acts"></div>
-
-  <section id="s6">
-    <div class="eyebrow"><span>加减项</span></div>
-    <h2>想加的，不想要的<small>选填，建议填</small></h2>
-    <p class="why">这里的东西会直接变成画面里的道具、地点和旁白里的一句话，是片子最像"你们"的部分。</p>
-    <div class="q">
-      <div class="q-h"><span class="q-n">19</span><span class="q-t">想放进去的东西</span><span class="q-k rec">建议填</span></div>
-      <div class="checks" id="adds"></div>
-    </div>
-    <div class="q">
-      <div class="q-h"><span class="q-n">20</span><span class="q-t">不想出现的东西</span><span class="q-k rec">建议填</span></div>
-      <div class="row"><textarea id="avoid" placeholder="例：不出现前任、不出现酒"></textarea></div>
-    </div>
-    <div class="q">
-      <div class="q-h"><span class="q-n">21</span><span class="q-t">五幕里有没有想换掉的一幕，换成什么</span><span class="q-k">选填</span></div>
-      <div class="row"><input type="text" id="swap" placeholder="例：第四幕换成和爸妈一起过年" ></div>
-    </div>
-  </section>
-  <section id="s7">
-    <div class="eyebrow"><span>音乐</span></div>
-    <h2>配乐<small>选填，只收不带歌词的纯音乐</small></h2>
-    <div class="q">
-      <div class="q-h"><span class="q-n">22</span><span class="q-t">有没有想用的纯音乐</span></div>
-      <div class="chips" id="music"></div>
-      <div class="hint">带歌词的歌和旁白会打架，所以只收纯音乐。没有合适的，制作方用音乐模型按片子情绪定制一首。</div>
-    </div>
-  </section>
-  <section id="s8">
-    <div class="eyebrow"><span>备注</span></div>
-    <h2>还有什么想法<small>必答，任何想法都写这里</small></h2>
-    <div class="q">
-      <div class="q-h"><span class="q-n">23</span><span class="q-t">注意点、参考、想法</span></div>
-      <div class="q-sub">想要的画面质感、参考的电影或照片、特别在意的地方、怕出错的地方，都写。写得越具体，片子越像你们想的那样。</div>
-      <div class="row"><textarea id="notes" placeholder="例：画面想要日系电影那种朦胧、精致的质感；旁白别太煽情；他不喜欢正面特写"></textarea></div>
-    </div>
-  </section>
+  <div id="themeBody" hidden></div>
 </main>
 
 <aside>
-  <div class="card">
+  <div class="card" role="region" aria-labelledby="cardTitle">
     <div class="card-h">
-      <h3>故事卡</h3>
+      <h3 id="cardTitle">故事卡</h3>
       <p>答一题，改一行。填完后复制，通过微信发回制作方。</p>
-      <div class="acts" id="actChips"></div>
+      <div class="acts-chips" id="actChips"></div>
     </div>
     <div class="card-b mono" id="cardBody"></div>
     <div class="card-f">
@@ -248,61 +167,206 @@ html[lang="en"] .card-b{word-break:normal;overflow-wrap:anywhere}
 
 <script>
 (function(){
-const SPEC = {
+/* ============ 数据：公共项 ============ */
+const COMMON = {
   ratio:[['宽屏 16:9（默认，现场大屏）','宽屏 16:9'],['窄屏 9:16（手机竖屏）','窄屏 9:16']],
-  occasion:['仪式前暖场','仪式中','宴会开场'],
   duration:[['90 秒（默认）','90 秒'],['180 秒','180 秒']],
   style:[['写实电影感','写实电影感'],['水彩绘本','水彩绘本'],['纸艺折纸','纸艺折纸'],['黏土定格','黏土定格'],['可爱 3D 动画','可爱 3D 动画']],
-  styleMode:[['真人出镜，环境和画风是动画','真人出镜+动画环境'],['纯动画，两人也画成动画形象','纯动画'],['写实真人，不是动画','写实真人']],
-  acts:[
-    {id:'a1',n:'第一幕',name:'相识',ask:'你们是怎么认识的',qPick:7,
-     opts:['校园同学','同事','朋友介绍','网络认识','旅行或活动偶遇','青梅竹马'],
-     fill:{q:8,ask:'第一次见面在哪、什么季节、谁先注意到谁？',ph:'例：大二图书馆门口的林荫道，秋天，他先注意到她'},
-     extra:{q:9,ask:'那天有没有一个你到现在还记得的小东西（一本书、一杯饮料、一句话）？',ph:'例：她抱着两本书'}},
-    {id:'a2',n:'第二幕',name:'相知',ask:'是怎么慢慢走近的',qPick:10,
-     opts:['雨天共伞','一起自习或加班','一起吃饭','深夜打电话','一起旅行','生病照顾','一起做饭'],
-     fill:{q:11,ask:'对方做过的一件让你心动的小事。',ph:'例：下雨天他的伞永远偏向她，自己右肩总是湿的'}},
-    {id:'a3',n:'第三幕',name:'确认',ask:'怎么在一起的，表白或求婚',qPick:12,
-     opts:['毕业时决定一起走','表白','求婚','异地重逢','决定同行（搬家、换城市）'],
-     fill:{q:13,ask:'在哪、谁开的口、说了什么？',ph:'例：毕业那天教学楼前，他说以后的路一起走'}},
-    {id:'a4',n:'第四幕',name:'相伴',ask:'一起生活的日子',qPick:14,
-     opts:['家中翻相册','布置第一个家','养宠物','一起做饭','异地坚持','共同事业','一起熬过一件难事'],
-     fill:{q:15,ask:'日常里最"你们"的一个画面。',ph:'例：周末傍晚窝在沙发翻老照片，笑到茶都凉了'}},
-    {id:'a5',n:'第五幕',name:'承诺',ask:'婚礼当天，片子怎么收尾',qPick:17,
-     venue:{q:16,opts:['户外草坪或花园','室内宴会厅','中式庭院','教堂','海边','旅行婚礼']},
-     opts:['牵手走远','回眸相笑','拥抱','交换戒指（只拍手，最稳）'],
-     fill:{q:18,ask:'想对对方说的一句话，会做结尾旁白。',ph:'例：这次，我就在你身边'}}
-  ],
-  adds:[['pet','宠物，名字','例：柯基「豆豆」'],['place','一个有意义的地方','例：学校后门的奶茶店'],['thing','一件有意义的物品','例：第一次约会的电影票'],['song','一首歌','例：他们大学时常听的那首'],['phrase','一句你们常说的话','例：走啦，回家']]
+  styleMode:[['真人出镜，环境和画风是动画','真人出镜+动画环境'],['纯动画，主角也画成动画形象','纯动画'],['写实真人，不是动画','写实真人']],
+  adds:[['pet','宠物，名字','例：柯基「豆豆」'],['place','一个有意义的地方','例：学校后门的奶茶店'],['thing','一件有意义的物品','例：第一次约会的电影票'],['song','一首歌','例：他们大学时常听的那首'],['phrase','一句常说的话','例：走啦，回家']]
 };
+const PHOTO_COUPLE='请把两人清晰的正脸合照或各自单人照，通过微信等方式另发给制作方。早年的照片也可以补充。此处不上传照片。';
+const HINT_SELFIE='自拍是广角近距离，脸会比真人略宽，生成的画面会照着画。能再给一张别人拍的合照更好。';
+const OCC_SUB='决定结尾旁白怎么落、配乐快慢。';
+const SAY_SUB='想对 TA 说的一句话，会做结尾旁白。';
+const MEET_OPTS=['校园同学','同事','朋友介绍','网络认识','旅行或活动偶遇','青梅竹马'];
+const MEET_FILL={ask:'第一次见面在哪、什么季节、谁先注意到谁？',ph:'例：大二图书馆门口的林荫道，秋天，他先注意到她'};
+const MEET_EXTRA={ask:'那天有没有一个你到现在还记得的小东西（一本书、一杯饮料、一句话）？',ph:'例：她抱着两本书'};
+const CLOSE_OPTS=['雨天共伞','一起自习或加班','一起吃饭','深夜打电话','一起旅行','生病照顾','一起做饭'];
+const CLOSE_FILL={ask:'对方做过的一件让你心动的小事。',ph:'例：下雨天他的伞永远偏向她，自己右肩总是湿的'};
+const WHO_COUPLE={ask:'两人在视频里怎么称呼',a:'我',b:'TA',aph:'例：阿远',bph:'例：小雨'};
+
+/* ============ 数据：12 个题材 ============ */
+const THEMES = {
+wedding:{
+  t:'婚礼爱情',title:'婚礼故事采集卡',
+  who:{ask:'两人在视频里怎么称呼',a:'新郎',b:'新娘',aph:'例：阿远',bph:'例：小雨'},
+  photo:'请把两人清晰的正脸合照或各自单人照，通过微信等方式另发给制作方。刚认识时、婚纱或试妆的照片也可以补充。此处不上传照片。',
+  photoHint:HINT_SELFIE,
+  occ:{ask:'在哪个环节播放',sub:'决定结尾旁白怎么落、配乐快慢：暖场留一步给仪式，仪式中直接落到誓言，宴会开场更轻快、可以带一句给来宾。',opts:['仪式前暖场','仪式中','宴会开场']},
+  acts:[
+    {n:'第一幕',name:'相识',ask:'你们是怎么认识的',opts:MEET_OPTS,fill:MEET_FILL,extra:MEET_EXTRA},
+    {n:'第二幕',name:'相知',ask:'是怎么慢慢走近的',opts:CLOSE_OPTS,fill:CLOSE_FILL},
+    {n:'第三幕',name:'确认',ask:'怎么在一起的，表白或求婚',opts:['毕业时决定一起走','表白','求婚','异地重逢','决定同行（搬家、换城市）'],fill:{ask:'在哪、谁开的口、说了什么？',ph:'例：毕业那天教学楼前，他说以后的路一起走'}},
+    {n:'第四幕',name:'相伴',ask:'一起生活的日子',opts:['家中翻相册','布置第一个家','养宠物','一起做饭','异地坚持','共同事业','一起熬过一件难事'],fill:{ask:'日常里最"你们"的一个画面。',ph:'例：周末傍晚窝在沙发翻老照片，笑到茶都凉了'}},
+    {n:'第五幕',name:'承诺',ask:'婚礼当天，片子怎么收尾',venue:{ask:'婚礼在哪办',opts:['户外草坪或花园','室内宴会厅','中式庭院','教堂','海边','旅行婚礼']},opts:['牵手走远','回眸相笑','拥抱','交换戒指（只拍手，最稳）'],fill:{ask:SAY_SUB,ph:'例：这次，我就在你身边'}}
+  ]},
+proposal:{
+  t:'求婚',title:'求婚故事采集卡',
+  who:WHO_COUPLE,photo:PHOTO_COUPLE,photoHint:HINT_SELFIE,
+  occ:{ask:'片子什么时候用',sub:'求婚前预热吊胃口，现场播放直接落到那句话，事后回顾更松弛。'+OCC_SUB,opts:['求婚前预热','求婚现场播放','求婚后回顾']},
+  acts:[
+    {n:'第一幕',name:'相识',ask:'你们是怎么认识的',opts:MEET_OPTS,fill:MEET_FILL,extra:MEET_EXTRA},
+    {n:'第二幕',name:'相知',ask:'是怎么慢慢走近的',opts:CLOSE_OPTS,fill:CLOSE_FILL},
+    {n:'第三幕',name:'认定',ask:'怎么确定就是 TA',opts:['一次深夜长谈','一起熬过难关','见过彼此最狼狈的样子','说不上来，就是确定'],fill:{ask:'哪个瞬间让你确定要向 TA 求婚？',ph:'例：她照顾生病的我一周，我就想是这个人了'}},
+    {n:'第四幕',name:'筹划',ask:'求婚是怎么准备的',opts:['准备戒指','布置场地','朋友助攻','瞒着 TA 保密'],fill:{ask:'筹划中最用心或最惊险的一个细节。',ph:'例：戒指藏在蛋糕里，差点被她先吃到'}},
+    {n:'第五幕',name:'那一刻',ask:'求婚那一刻',venue:{ask:'求婚在哪里（或打算在哪里）',opts:['户外','餐厅','家里','旅行中','第一次约会的地方']},opts:['单膝跪地','拿出戒指','说出那句话','TA 哭了'],fill:{ask:SAY_SUB,ph:'例：往后的路，换我牵着你走'}}
+  ]},
+anniversary:{
+  t:'纪念日 / 周年',title:'纪念日故事采集卡',
+  who:WHO_COUPLE,photo:PHOTO_COUPLE,photoHint:HINT_SELFIE,
+  occ:{ask:'片子什么时候看',sub:OCC_SUB,opts:['纪念日当晚','聚会播放','私下两人看']},
+  acts:[
+    {n:'第一幕',name:'初见',ask:'你们是怎么认识的',opts:MEET_OPTS,fill:MEET_FILL,extra:MEET_EXTRA},
+    {n:'第二幕',name:'同行',ask:'是怎么慢慢走近的',opts:CLOSE_OPTS,fill:CLOSE_FILL},
+    {n:'第三幕',name:'转折',ask:'一起迈过的坎',opts:['异地','经济压力','家人反对','事业变动'],fill:{ask:'那段日子怎么过来的，谁做了什么？',ph:'例：异地两年，他每月坐五个小时火车来看我'}},
+    {n:'第四幕',name:'坚守',ask:'这些年最"我们"的习惯',opts:['每天说晚安','周末一起做饭','每年一次旅行','睡前聊天'],fill:{ask:'一个坚持到现在的习惯或小仪式。',ph:'例：再忙周日早上也一起吃顿早午餐'}},
+    {n:'第五幕',name:'约定',ask:'下一个约定',opts:['一次远行','一个新家','一件想一起完成的事'],fill:{ask:SAY_SUB,ph:'例：下一个十年，还请多指教'}}
+  ]},
+birthday:{
+  t:'生日 / 寿辰',title:'生日故事采集卡',
+  who:{ask:'寿星和你在视频里怎么称呼',a:'寿星',b:'你（送片人）',aph:'例：老爸',bph:'例：女儿'},
+  photo:'请把寿星各个阶段的清晰照片（小时候、青年、近照），通过微信等方式另发给制作方。此处不上传照片。',
+  photoHint:'老照片翻拍也可以，尽量清晰、正脸。',
+  occ:{ask:'在哪个环节播放',sub:OCC_SUB,opts:['生日宴现场','聚会开场','私下赠送']},
+  acts:[
+    {n:'第一幕',name:'小时候',ask:'记忆里的 TA',opts:['调皮捣蛋','懂事得早','爱读书','闲不住'],fill:{ask:'一个小时候的画面，越具体越好。',ph:'例：她小时候总蹲在门口等爸爸下班'}},
+    {n:'第二幕',name:'长大',ask:'TA 的年轻时代',opts:['求学','工作打拼','成家','闯荡远方'],fill:{ask:'TA 年轻时的一件标志性的事。',ph:'例：他二十出头一个人去了深圳'}},
+    {n:'第三幕',name:'高光',ask:'TA 最让人佩服的一件事',opts:['撑起一个家','事业有成','帮助他人','坚持一门手艺'],fill:{ask:'具体是什么事，你为什么佩服。',ph:'例：妈妈一个人把我和哥哥拉扯大'}},
+    {n:'第四幕',name:'不易',ask:'TA 不容易的一段日子',opts:['生病的日子','为家操劳','工作低谷','默默付出'],fill:{ask:'那段日子 TA 是怎么扛过来的。',ph:'例：那几年她白天上班晚上摆摊'}},
+    {n:'第五幕',name:'祝福',ask:'此刻的祝福',opts:['健康长寿','天天开心','慢下来享福','继续做自己'],fill:{ask:'想对 TA 说的一句话，会做结尾旁白。',ph:'例：爸，以后换我照顾你'}}
+  ]},
+baby:{
+  t:'周岁宴',title:'宝宝周岁故事采集卡',
+  who:{ask:'宝宝和你（记录人）怎么称呼',a:'宝宝小名',b:'你是',aph:'例：豆豆',bph:'例：妈妈'},
+  photo:'请把宝宝清晰的正面照（出生、百天、近照），通过微信等方式另发给制作方。此处不上传照片。',
+  photoHint:'正脸、光线好的照片效果最好；出生时的照片也建议提供。',
+  occ:{ask:'在哪个环节播放',sub:OCC_SUB,opts:['周岁宴现场','抓周环节','亲友群分享']},
+  acts:[
+    {n:'第一幕',name:'期待',ask:'TA 到来之前',opts:['准备小衣服','起名字','想象 TA 的样子','孕期的辛苦与甜蜜'],fill:{ask:'等待 TA 时印象最深的一件事。',ph:'例：爸爸第一次听到胎心，激动得一晚没睡'}},
+    {n:'第二幕',name:'初见',ask:'出生那天',opts:['产房外的等待','第一声哭','第一次抱 TA','小小的手和脚'],fill:{ask:'出生那天的画面。',ph:'例：凌晨三点，护士把她抱出来，皱皱巴巴像个小老头'}},
+    {n:'第三幕',name:'第一次',ask:'TA 的第一次',opts:['第一次笑','第一次翻身','第一次爬','第一次叫爸妈'],fill:{ask:'最难忘的一个"第一次"。',ph:'例：八个月那天突然冲我喊了一声"妈"'}},
+    {n:'第四幕',name:'日常',ask:'最治愈的日常',opts:['睡着的样子','吃饭满脸','洗澡玩水','出门遛弯'],fill:{ask:'一个百看不厌的日常画面。',ph:'例：她抱着奶瓶喝到睡着，嘴角还挂着奶'}},
+    {n:'第五幕',name:'祝福',ask:'想对一岁的 TA 说',opts:['健康长大','慢慢长大','勇敢去探索','永远被爱'],fill:{ask:'想对宝宝说的一句话，会做结尾旁白。',ph:'例：豆豆，这个世界很大，爸爸妈妈陪你慢慢看'}}
+  ]},
+graduation:{
+  t:'毕业',title:'毕业故事采集卡',
+  who:{ask:'主角和你在视频里怎么称呼',a:'主角',b:'你（记录人）',aph:'例：阿哲',bph:'例：室友'},
+  photo:'请把主角在校期间的照片（入学、课堂、活动、近照），通过微信等方式另发给制作方。此处不上传照片。',
+  photoHint:'集体照请标注哪一位是主角。',
+  occ:{ask:'在哪个环节播放',sub:OCC_SUB,opts:['毕业典礼','散伙饭','班级群分享']},
+  acts:[
+    {n:'第一幕',name:'入学',ask:'第一天',opts:['拖着行李报到','第一次进教室','初见室友','军训'],fill:{ask:'入学第一天印象最深的事。',ph:'例：九月太阳很大，爸爸送我到宿舍楼下就走了'}},
+    {n:'第二幕',name:'同伴',ask:'一起混的人',opts:['室友','同桌','社团伙伴','球队队友'],fill:{ask:'和 TA 们最常做的一件事。',ph:'例：宿舍四人每晚熄灯后开"卧谈会"'}},
+    {n:'第三幕',name:'挑战',ask:'最难的一段',opts:['考试周','一场比赛','一个项目','一段迷茫'],fill:{ask:'最难的时候是什么样，怎么扛过来的。',ph:'例：考研那年冬天，图书馆闭馆后去食堂背书'}},
+    {n:'第四幕',name:'高光',ask:'最骄傲的一刻',opts:['拿奖','上岸','演出成功','被认可'],fill:{ask:'那一刻的画面。',ph:'例：名单念到我名字时，全宿舍喊得比我还大声'}},
+    {n:'第五幕',name:'启程',ask:'想说的话',opts:['谢谢同伴','谢谢老师','给未来的自己','约定再聚'],fill:{ask:'想说的一句话，会做结尾旁白。',ph:'例：山水一程，三生有幸'}}
+  ]},
+growth:{
+  t:'成长记录',title:'成长故事采集卡',
+  who:{ask:'主角和记录人怎么称呼',a:'主角',b:'记录人',aph:'例：果果',bph:'例：妈妈'},
+  photo:'请把主角各成长阶段的清晰照片（小时候、各年级、近照），通过微信等方式另发给制作方。此处不上传照片。',
+  photoHint:'老照片翻拍也可以，尽量清晰、正脸。',
+  occ:{ask:'片子什么时候看',sub:OCC_SUB,opts:['成年礼','生日','家庭聚会']},
+  acts:[
+    {n:'第一幕',name:'起点',ask:'最早的记忆画面',opts:['学走路','第一次上学','搬过的家','小时候的模样'],fill:{ask:'最早的、或最常想起的一个画面。',ph:'例：骑着小自行车在院子里转圈，怎么也学不会'}},
+    {n:'第二幕',name:'痴迷',ask:'曾经痴迷的事',opts:['画画','运动','游戏','一个偶像'],fill:{ask:'痴迷到什么程度，有什么证据。',ph:'例：整面墙贴满她画的画，作业本背面也是'}},
+    {n:'第三幕',name:'跌倒',ask:'一次跌倒',opts:['考试失利','比赛输了','和朋友闹掰','一次生病'],fill:{ask:'那次跌倒是什么样，怎么爬起来的。',ph:'例：比赛输了哭了一路，第二天照常去训练'}},
+    {n:'第四幕',name:'蜕变',ask:'忽然长大的瞬间',opts:['独自出远门','一次担当','理解父母','找到方向'],fill:{ask:'哪个瞬间觉得 TA 忽然长大了。',ph:'例：第一次自己坐高铁，到站给我发"放心"'}},
+    {n:'第五幕',name:'远方',ask:'想对未来的自己说',opts:['保持热爱','别怕失败','慢慢走','常回家'],fill:{ask:'想说的一句话，会做结尾旁白。',ph:'例：愿你眼里的光一直在'}}
+  ]},
+travel:{
+  t:'旅行',title:'旅行故事采集卡',
+  who:{ask:'同行人在视频里怎么称呼',a:'我',b:'同行人',aph:'例：阿远',bph:'例：小雨和爸妈'},
+  photo:'请把旅途中的人物与风景照，通过微信等方式另发给制作方。此处不上传照片。',
+  photoHint:'人物正脸照和标志性风景照都建议提供。',
+  occ:{ask:'片子什么时候看',sub:OCC_SUB,opts:['旅行归来分享','纪念日','社交平台']},
+  acts:[
+    {n:'第一幕',name:'出发',ask:'为什么去那里',opts:['种草已久','临时起意','庆祝某件事','完成一个心愿'],fill:{ask:'出发前的心情或准备中的一件事。',ph:'例：她做了二十页攻略，结果第一天就全打乱了'}},
+    {n:'第二幕',name:'路上',ask:'路上的画面',opts:['车窗风景','赶车赶飞机','边走边吃','导航带错路'],fill:{ask:'路上印象最深的一个画面。',ph:'例：火车过隧道时，窗玻璃上全是我们的影子'}},
+    {n:'第三幕',name:'意外',ask:'计划外的事',opts:['迷路','坏天气','错过车次','意外惊喜'],fill:{ask:'那件计划外的事，后来怎么成了故事。',ph:'例：暴雨困在小镇，却吃到最难忘的一碗面'}},
+    {n:'第四幕',name:'高光',ask:'最值得的一刻',opts:['日出日落','一顿美食','一个当地人','终于到达'],fill:{ask:'那一刻的画面。',ph:'例：凌晨五点爬到山顶，云一下子全散了'}},
+    {n:'第五幕',name:'回家',ask:'回来之后',opts:['想念那口味道','照片翻了很多遍','计划下一趟','更珍惜身边人'],fill:{ask:'回来后最常想起的是什么。',ph:'例：回来后一个月的壁纸都是那片海'}}
+  ]},
+pet:{
+  t:'宠物',title:'宠物故事采集卡',
+  who:{ask:'宠物和你怎么称呼',a:'宠物名字',b:'TA 是什么（种类 / 品种）',aph:'例：豆豆',bph:'例：柯基，三岁'},
+  photo:'请把宠物清晰的正面照和日常照，通过微信等方式另发给制作方。此处不上传照片。',
+  photoHint:'正脸、眼睛清楚的照片效果最好。',
+  occ:{ask:'片子什么时候看',sub:OCC_SUB,opts:['相遇纪念日','TA 的生日','告别纪念','日常分享']},
+  acts:[
+    {n:'第一幕',name:'相遇',ask:'TA 怎么来到你家',opts:['领养','购买','捡到的','朋友送的'],fill:{ask:'第一次见到 TA 的样子。',ph:'例：雨天的纸箱里，它抖成一团'}},
+    {n:'第二幕',name:'日常',ask:'最日常的画面',opts:['等你回家','干饭积极','睡觉四仰八叉','特别黏人'],fill:{ask:'一个每天上演却百看不厌的画面。',ph:'例：每天六点准时蹲在门口等我下班'}},
+    {n:'第三幕',name:'趣事',ask:'TA 干过的"坏事"',opts:['拆家','偷吃','演戏装可怜','和别的动物吵架'],fill:{ask:'最哭笑不得的一件事。',ph:'例：咬坏了三双拖鞋，只咬左脚'}},
+    {n:'第四幕',name:'守护',ask:'TA 陪你度过的日子',opts:['陪你熬夜','你难过时 TA 在','生病时的陪伴','一起搬家'],fill:{ask:'TA 陪你度过的一段日子。',ph:'例：失恋那周，它一直把头搁在我腿上'}},
+    {n:'第五幕',name:'告白',ask:'想对 TA 说',opts:['谢谢你来过','要健康长久','对不起陪你的时间少','你是家人'],fill:{ask:SAY_SUB,ph:'例：豆豆，谢谢你选了我们'}}
+  ]},
+family:{
+  t:'家人 / 亲情',title:'家人故事采集卡',
+  who:{ask:'片子的主角和你怎么称呼',a:'主角（爸爸 / 妈妈 / …）',b:'你是谁',aph:'例：妈妈',bph:'例：女儿'},
+  photo:'请把主角各个阶段的清晰照片（年轻时代、近照、与家人的合照），通过微信等方式另发给制作方。此处不上传照片。',
+  photoHint:'老照片翻拍也可以，尽量清晰、正脸。',
+  occ:{ask:'片子什么时候看',sub:OCC_SUB,opts:['TA 的生日','节日','家庭聚会','平常的一天']},
+  acts:[
+    {n:'第一幕',name:'小时候',ask:'记忆里的 TA',opts:['做饭的背影','接送上下学','灯下缝补','严厉的样子'],fill:{ask:'小时候记忆里最清楚的 TA。',ph:'例：每天放学，校门口总有他的自行车'}},
+    {n:'第二幕',name:'一个画面',ask:'关于 TA 最清晰的画面',opts:['一双手','一个习惯动作','常坐的位置','常说的一句话'],fill:{ask:'那个画面是什么样。',ph:'例：妈妈的手总是裂着口子，冬天贴满胶布'}},
+    {n:'第三幕',name:'长大后才懂',ask:'当时不懂的事',opts:['TA 的节省','TA 的严厉','TA 的沉默','TA 的等待'],fill:{ask:'哪件事是长大后才懂的。',ph:'例：他不是不爱说话，是累得不想说话'}},
+    {n:'第四幕',name:'现在的 TA',ask:'TA 现在的样子',opts:['头发白了','学会视频通话','在带孙辈','有了新的爱好'],fill:{ask:'现在的 TA 是什么样。',ph:'例：她学会了发语音，一条六十秒，全是叮嘱'}},
+    {n:'第五幕',name:'想说',ask:'想对 TA 说',opts:['谢谢','对不起','我爱你','换我来照顾你'],fill:{ask:SAY_SUB,ph:'例：妈，这次换我牵你的手'}}
+  ]},
+career:{
+  t:'工作 / 事业',title:'事业故事采集卡',
+  who:{ask:'主角在视频里怎么称呼',a:'主角（我 / 团队）',b:'行业或岗位',aph:'例：我们团队',bph:'例：餐饮创业者'},
+  photo:'请把工作场景、团队、产品或门店的照片，通过微信等方式另发给制作方。此处不上传照片。',
+  photoHint:'早期照片与现在的对比照效果最好。',
+  occ:{ask:'片子什么时候用',sub:OCC_SUB,opts:['年会','周年庆','离职纪念','项目庆功']},
+  acts:[
+    {n:'第一幕',name:'入行',ask:'为什么选这行',opts:['热爱','误打误撞','家庭影响','一个契机'],fill:{ask:'入行那年的状态。',ph:'例：刚毕业，全部家当一个行李箱'}},
+    {n:'第二幕',name:'碰壁',ask:'最难的时刻',opts:['没单子','被否定','资金断裂','团队散了'],fill:{ask:'最难的一次是什么样。',ph:'例：连续三个月没开张，房租都交不起'}},
+    {n:'第三幕',name:'转折',ask:'怎么挺过来的',opts:['贵人相助','死磕到底','换了个方向','团队没散'],fill:{ask:'转折是怎么发生的。',ph:'例：一个老客户介绍了整层写字楼的单子'}},
+    {n:'第四幕',name:'高光',ask:'最有成就感的事',opts:['第一单','一次认可','做成大项目','带出了人'],fill:{ask:'那一刻的画面。',ph:'例：徒弟独立签下第一单，比我自己签还激动'}},
+    {n:'第五幕',name:'下一站',ask:'想对同行人说',opts:['感谢团队','继续死磕','不忘初心','下一个目标'],fill:{ask:'想说的一句话，会做结尾旁白。',ph:'例：路还长，咱们慢慢走'}}
+  ]},
+brand:{
+  t:'品牌 / 产品',title:'品牌故事采集卡',
+  who:{ask:'品牌和讲述人怎么称呼',a:'品牌名',b:'创始人 / 团队',aph:'例：山茶事务所',bph:'例：主理人阿茶'},
+  photo:'请把产品、门店、团队工作照，通过微信等方式另发给制作方。此处不上传照片。',
+  photoHint:'产品细节照和早期老照片都建议提供。',
+  occ:{ask:'片子在哪里用',sub:OCC_SUB,opts:['发布会','官网 / 详情页','招商加盟','周年庆']},
+  acts:[
+    {n:'第一幕',name:'起点',ask:'为什么做这个品牌',opts:['自己的痛点','看不惯行业现状','一门手艺','一个理想'],fill:{ask:'起心动念的那一刻。',ph:'例：找不到一杯不加香精的茶，干脆自己做'}},
+    {n:'第二幕',name:'坚持',ask:'最难时没放弃的原因',opts:['用户鼓励','团队','信念','没有退路'],fill:{ask:'最难的时候是什么样，靠什么撑住。',ph:'例：小店连续亏损，是一条用户留言让我们撑下去'}},
+    {n:'第三幕',name:'转折',ask:'关键转折',opts:['第一个爆款','一次曝光','调整定位','熬过淡季'],fill:{ask:'转折是怎么发生的。',ph:'例：一条素人视频突然带火了我们'}},
+    {n:'第四幕',name:'成果',ask:'被认可的证据',opts:['复购和口碑','媒体报道','行业奖项','用户来信'],fill:{ask:'最让你们自豪的一个认可。',ph:'例：有用户把我们的包装攒了一整面墙'}},
+    {n:'第五幕',name:'愿景',ask:'想对用户说',opts:['谢谢陪伴','坚持初心','新品预告','一个承诺'],fill:{ask:'想对用户说的一句话，会做结尾旁白。',ph:'例：谢谢你们的挑剔，让我们不敢偷懒'}}
+  ]}
+};
+const THEME_KEYS=Object.keys(THEMES);
+
+/* ============ 多语言 ============ */
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 const LANG = new URL(location.href).searchParams.get('lang')==='en' ? 'en' : 'zh';
 const EN = {
-  "婚礼故事采集卡": "Wedding Story Card",
+  "故事采集卡": "Story Card",
+  "第一步": "Step one",
+  "这部片子讲谁的故事": "Whose story is this film?",
+  "先选题材，问题会按题材生成": "Choose a theme first; the questions will adapt",
+  "题材": "Theme",
   "清空": "Clear",
+  "填好后点「复制故事卡」，通过微信等方式发回制作方。推荐电脑填写，手机也可以。下面的例子只是填写提示，请只写真实经历；没有、记不清或不想呈现的，选「其他」并说明，细节栏也可如实填写。文案、图片和视频由制作方用 AI 工具完成，这张卡只负责把故事讲清楚。": "Fill this in, choose Copy story card, and send the text to your creator through your usual messaging app. A computer is recommended; a phone works too. Examples are only prompts: use real experiences. Choose Other if something did not happen, you do not remember, or you prefer to leave it out; say the same in the detail field. Script, images and video are produced by your creator with AI tools; this card only captures the story.",
+  "文字草稿仅保存在当前浏览器；不收集手机号，不向后台提交。照片原图请在聊天中另发。": "Your text draft stays in this browser. No phone number is collected and nothing is submitted to a server. Send original photos separately in your conversation.",
   "基本信息": "The basics",
   "先认识一下": "A little about you",
   "全部必答": "Required",
-  "填好后点「复制故事卡」，通过微信等方式发回制作方。推荐电脑填写，手机也可以。下面的例子只是填写提示，请只写你们的真实经历；没有、记不清或不想呈现的，选「其他」并说明，细节栏也可如实填写。": "Fill this in, choose Copy story card, and send the text to your creator through your usual messaging app. A computer is recommended; a phone works too. Examples are only prompts: use your real experiences. Choose Other if something did not happen, you do not remember, or you prefer to leave it out; say the same in the detail field.",
-  "文字草稿仅保存在当前浏览器；不收集手机号，不向后台提交。照片原图请在聊天中另发。": "Your text draft stays in this browser. No phone number is collected and nothing is submitted to a server. Send original photos separately in your conversation.",
   "视频尺寸": "Aspect ratio",
-  "两人在视频里怎么称呼": "What names should we use in the film?",
-  "新郎": "Groom",
-  "新娘": "Bride",
-  "例：阿远": "e.g. Alex",
-  "例：小雨": "e.g. Emma",
   "照片": "Photos",
-  "请把两人清晰的正脸合照或各自单人照，通过微信等方式另发给制作方。刚认识时、婚纱或试妆的照片也可以补充。此处不上传照片。": "Send clear, front-facing photos of you together or individually to your creator in your existing conversation. Early relationship photos and wedding outfit or makeup photos can help too. There is no photo upload here.",
-  "自拍是广角近距离，脸会比真人略宽，生成的画面会照着画。能再给一张别人拍的合照更好。": "Close-up wide-angle selfies can distort faces. A clear photo taken by someone else is a useful additional reference.",
-  "在哪个环节播放": "When will the film be shown?",
-  "决定结尾旁白怎么落、配乐快慢：暖场留一步给仪式，仪式中直接落到誓言，宴会开场更轻快、可以带一句给来宾。": "This shapes the ending and musical pace: an introduction can lead into the ceremony, a ceremony film can lead into vows, and a reception opening can feel lighter and welcome guests.",
   "时长": "Duration",
   "先选希望的片长，五幕按故事轻重分配；具体镜头根据后续旁白的实际节奏安排。": "Choose your preferred length. The five acts will reflect your story; individual shots will follow the actual narration timing.",
   "画风": "Visual style",
-  "这个画风里，两个人怎么出现": "How should the two of you look in this style?",
-  "\"真人出镜\"：脸和身材按照片来，环境和质感是动画；\"纯动画\"：两人也画成动画形象；画风选了\"其他\"且是写实的，选\"写实真人\"。这一项直接决定生图提示词怎么写。": "Real people in a stylized setting keeps your likeness from the photos. Fully animated characters stylizes both of you too. Choose Photorealistic people if your Other style is realistic. This choice guides the image prompts.",
+  "这个画风里，主角怎么出现": "How should the people look in this style?",
+  "\"真人出镜\"：脸和身材按照片来，环境和质感是动画；\"纯动画\"：主角也画成动画形象；画风选了\"其他\"且是写实的，选\"写实真人\"。这一项直接决定生图提示词怎么写。": "Real people in a stylized setting keeps the likeness from the photos. Fully animated characters stylizes everyone. Choose Photorealistic people if your Other style is realistic. This choice guides the image prompts.",
   "加减项": "Include or leave out",
   "想加的，不想要的": "What matters to you",
   "选填，建议填": "Optional, recommended",
@@ -324,7 +388,7 @@ const EN = {
   "必答，任何想法都写这里": "Required; write None if there is nothing else",
   "注意点、参考、想法": "Ideas, references and things to watch for",
   "想要的画面质感、参考的电影或照片、特别在意的地方、怕出错的地方，都写。写得越具体，片子越像你们想的那样。": "Tell us about the look you want, film or photo references, important details and anything you worry might go wrong. Specific notes help the film match your wishes.",
-  "例：画面想要日系电影那种朦胧、精致的质感；旁白别太煽情；他不喜欢正面特写": "e.g. Soft, refined cinematic images; understated narration; avoid front-facing close-ups of him",
+  "例：画面想要日系电影那种朦胧、精致的质感；旁白别太煽情；他不喜欢正面特写": "e.g. Soft, refined cinematic images; understated narration; avoid front-facing close-ups",
   "故事卡": "Your story card",
   "答一题，改一行。填完后复制，通过微信发回制作方。": "Your card updates as you answer. When finished, copy it and send it to your creator.",
   "复制故事卡": "Copy story card",
@@ -334,9 +398,6 @@ const EN = {
   "宽屏 16:9": "Landscape 16:9",
   "窄屏 9:16（手机竖屏）": "Portrait 9:16 (phone screen)",
   "窄屏 9:16": "Portrait 9:16",
-  "仪式前暖场": "Before the ceremony",
-  "仪式中": "During the ceremony",
-  "宴会开场": "Reception opening",
   "90 秒（默认）": "90 seconds (default)",
   "90 秒": "90 seconds",
   "180 秒": "180 seconds",
@@ -347,8 +408,8 @@ const EN = {
   "可爱 3D 动画": "Playful 3D animation",
   "真人出镜，环境和画风是动画": "Real people in a stylized setting",
   "真人出镜+动画环境": "Real people + stylized setting",
-  "纯动画，两人也画成动画形象": "Both people fully animated",
-  "纯动画": "Fully animated characters",
+  "纯动画，主角也画成动画形象": "Fully animated characters",
+  "纯动画": "Fully animated",
   "写实真人，不是动画": "Photorealistic people, not animation",
   "写实真人": "Photorealistic people",
   "第一幕": "Act 1",
@@ -356,16 +417,8 @@ const EN = {
   "第三幕": "Act 3",
   "第四幕": "Act 4",
   "第五幕": "Act 5",
-  "相识": "Meeting",
-  "相知": "Growing closer",
-  "确认": "Choosing each other",
-  "相伴": "Life together",
-  "承诺": "Commitment",
   "你们是怎么认识的": "How did you meet?",
   "是怎么慢慢走近的": "How did you grow closer?",
-  "怎么在一起的，表白或求婚": "How did you become a couple or get engaged?",
-  "一起生活的日子": "Your everyday life together",
-  "婚礼当天，片子怎么收尾": "How should the wedding film end?",
   "校园同学": "School or university",
   "同事": "At work",
   "朋友介绍": "Through friends",
@@ -385,50 +438,11 @@ const EN = {
   "一起做饭": "Cooking together",
   "对方做过的一件让你心动的小事。": "One small thing they did that moved you.",
   "例：下雨天他的伞永远偏向她，自己右肩总是湿的": "e.g. He tilted the umbrella toward her and let his own shoulder get wet",
-  "毕业时决定一起走": "Choosing a future together at graduation",
-  "表白": "Expressing your feelings",
-  "求婚": "A proposal",
-  "异地重逢": "Reuniting after time apart",
-  "决定同行（搬家、换城市）": "Moving or changing cities together",
-  "在哪、谁开的口、说了什么？": "Where were you, who spoke first, and what was said?",
-  "例：毕业那天教学楼前，他说以后的路一起走": "e.g. On graduation day, he said he wanted to share the road ahead",
-  "家中翻相册": "Looking through photos at home",
-  "布置第一个家": "Making your first home",
-  "养宠物": "Life with a pet",
-  "异地坚持": "Making long distance work",
-  "共同事业": "Working on something together",
-  "一起熬过一件难事": "Getting through a difficult time",
-  "日常里最\"你们\"的一个画面。": "An everyday moment that feels especially like the two of you.",
-  "例：周末傍晚窝在沙发翻老照片，笑到茶都凉了": "e.g. Looking through old photos on the sofa and laughing until the tea went cold",
-  "户外草坪或花园": "Lawn or garden",
-  "室内宴会厅": "Indoor reception hall",
-  "中式庭院": "Chinese courtyard",
-  "教堂": "Church",
-  "海边": "By the sea",
-  "旅行婚礼": "Destination wedding",
-  "牵手走远": "Walking away hand in hand",
-  "回眸相笑": "Turning to smile at each other",
-  "拥抱": "An embrace",
-  "交换戒指（只拍手，最稳）": "Exchanging rings (hands only for simpler framing)",
-  "想对对方说的一句话，会做结尾旁白。": "One thing you would like to say to your partner, for the closing narration.",
-  "例：这次，我就在你身边": "e.g. This time, I am right beside you",
-  "宠物，名字": "Pet and name",
-  "宠物": "Pet",
-  "例：柯基「豆豆」": "e.g. Our corgi, Bean",
-  "一个有意义的地方": "A meaningful place",
-  "例：学校后门的奶茶店": "e.g. The tea shop behind our school",
-  "一件有意义的物品": "A meaningful object",
-  "例：第一次约会的电影票": "e.g. Our first-date cinema ticket",
-  "一首歌": "A song",
-  "例：他们大学时常听的那首": "e.g. The song we used to play at university",
-  "一句你们常说的话": "Something you often say",
-  "例：走啦，回家": "e.g. Come on, let us go home",
   "其他": "Other",
   "其他，请填写": "Other, please describe",
   "自己写一个": "Describe your own answer",
   "自己写": "Describe your own answer",
   "例：1:1 方形": "e.g. Square 1:1",
-  "例：敬酒环节": "e.g. During the toasts",
   "例：120 秒": "e.g. 120 seconds",
   "例：岩井俊二《花与爱丽丝》那种质感": "e.g. The soft cinematic look of Hana and Alice",
   "我有想用的纯音乐": "I have an instrumental track in mind",
@@ -436,8 +450,6 @@ const EN = {
   "曲名": "Track title",
   "交给制作方定制": "Let the creator choose or make the music",
   "制作方定制": "Music by the creator",
-  "婚礼在哪办": "Where will the wedding take place?",
-  "决定这一幕画在什么地方、什么光线。": "This guides the setting and light for the ending.",
   "结尾动作": "Ending action",
   "选一个": "Choose one",
   "填一个": "Add a detail",
@@ -449,7 +461,7 @@ const EN = {
   "播放环节": "Playback occasion",
   "尺寸": "Aspect ratio",
   "场合": "Occasion",
-  "画风里两人怎么出现": "How the two people appear",
+  "画风里主角怎么出现": "How the people appear",
   "场景": "scene",
   "结尾一句": "Closing line",
   "细节": "detail",
@@ -471,10 +483,784 @@ const EN = {
   "已复制，把故事卡和原图通过微信发回制作方": "Copied. Send the text to your creator and attach original photos separately.",
   "请长按文字全选复制，电脑也可按 Ctrl / ⌘ + C": "Select all the text and copy it. On a computer, use Ctrl / Command + C.",
   "清空本机这份填写草稿？": "Clear this draft from this browser?",
-  "已清空": "Draft cleared"
+  "已清空": "Draft cleared",
+  "先选题材": "Choose a theme first",
+  "婚礼爱情": "Wedding",
+  "婚礼故事采集卡": "Wedding Story Card",
+  "两人在视频里怎么称呼": "What names should we use in the film?",
+  "新郎": "Groom",
+  "新娘": "Bride",
+  "例：阿远": "e.g. Alex",
+  "例：小雨": "e.g. Emma",
+  "请把两人清晰的正脸合照或各自单人照，通过微信等方式另发给制作方。刚认识时、婚纱或试妆的照片也可以补充。此处不上传照片。": "Send clear, front-facing photos of you together or individually to your creator in your existing conversation. Early relationship photos and wedding outfit or makeup photos can help too. There is no photo upload here.",
+  "请把两人清晰的正脸合照或各自单人照，通过微信等方式另发给制作方。早年的照片也可以补充。此处不上传照片。": "Send clear, front-facing photos of you together or individually to your creator in your existing conversation. Earlier photos can help too. There is no photo upload here.",
+  "请把主角各个阶段的清晰照片（年轻时代、近照、与家人的合照），通过微信等方式另发给制作方。此处不上传照片。": "Send clear photos of the lead at different stages (younger years, a recent photo, family photos) to your creator in your existing conversation. There is no photo upload here.",
+  "自拍是广角近距离，脸会比真人略宽，生成的画面会照着画。能再给一张别人拍的合照更好。": "Close-up wide-angle selfies can distort faces. A clear photo taken by someone else is a useful additional reference.",
+  "在哪个环节播放": "When will the film be shown?",
+  "决定结尾旁白怎么落、配乐快慢：暖场留一步给仪式，仪式中直接落到誓言，宴会开场更轻快、可以带一句给来宾。": "This shapes the ending and musical pace: an introduction can lead into the ceremony, a ceremony film can lead into vows, and a reception opening can feel lighter and welcome guests.",
+  "仪式前暖场": "Before the ceremony",
+  "仪式中": "During the ceremony",
+  "宴会开场": "Reception opening",
+  "相识": "Meeting",
+  "相知": "Growing closer",
+  "确认": "Choosing each other",
+  "怎么在一起的，表白或求婚": "How did you become a couple or get engaged?",
+  "毕业时决定一起走": "Choosing a future together at graduation",
+  "表白": "Expressing your feelings",
+  "求婚": "A proposal",
+  "异地重逢": "Reuniting after time apart",
+  "决定同行（搬家、换城市）": "Moving or changing cities together",
+  "在哪、谁开的口、说了什么？": "Where were you, who spoke first, and what was said?",
+  "例：毕业那天教学楼前，他说以后的路一起走": "e.g. On graduation day, he said he wanted to share the road ahead",
+  "相伴": "Life together",
+  "一起生活的日子": "Your everyday life together",
+  "家中翻相册": "Looking through photos at home",
+  "布置第一个家": "Making your first home",
+  "养宠物": "Life with a pet",
+  "异地坚持": "Making long distance work",
+  "共同事业": "Working on something together",
+  "一起熬过一件难事": "Getting through a difficult time",
+  "日常里最\"你们\"的一个画面。": "An everyday moment that feels especially like the two of you.",
+  "例：周末傍晚窝在沙发翻老照片，笑到茶都凉了": "e.g. Looking through old photos on the sofa and laughing until the tea went cold",
+  "承诺": "Commitment",
+  "婚礼当天，片子怎么收尾": "How should the wedding film end?",
+  "婚礼在哪办": "Where will the wedding take place?",
+  "户外草坪或花园": "Lawn or garden",
+  "室内宴会厅": "Indoor reception hall",
+  "中式庭院": "Chinese courtyard",
+  "教堂": "Church",
+  "海边": "By the sea",
+  "旅行婚礼": "Destination wedding",
+  "牵手走远": "Walking away hand in hand",
+  "回眸相笑": "Turning to smile at each other",
+  "拥抱": "An embrace",
+  "交换戒指（只拍手，最稳）": "Exchanging rings (hands only for simpler framing)",
+  "想对 TA 说的一句话，会做结尾旁白。": "One thing you would like to say, for the closing narration.",
+  "例：这次，我就在你身边": "e.g. This time, I am right beside you",
+  "求婚故事采集卡": "Proposal Story Card",
+  "片子什么时候用": "When will the film be used?",
+  "求婚前预热吊胃口，现场播放直接落到那句话，事后回顾更松弛。决定结尾旁白怎么落、配乐快慢。": "A teaser builds anticipation; a film played at the proposal lands on the big question; a retrospective feels relaxed. This shapes the ending and musical pace.",
+  "求婚前预热": "Before the proposal",
+  "求婚现场播放": "Played at the proposal",
+  "求婚后回顾": "After the proposal",
+  "认定": "Knowing it is them",
+  "怎么确定就是 TA": "How did you know they were the one?",
+  "一次深夜长谈": "A late-night talk",
+  "一起熬过难关": "Getting through hard times",
+  "见过彼此最狼狈的样子": "Seeing each other at your worst",
+  "说不上来，就是确定": "No reason; you just knew",
+  "哪个瞬间让你确定要向 TA 求婚？": "Which moment made you certain you would propose?",
+  "例：她照顾生病的我一周，我就想是这个人了": "e.g. She nursed me through a week of illness, and I just knew",
+  "筹划": "The plan",
+  "求婚是怎么准备的": "How was the proposal planned?",
+  "准备戒指": "Preparing the ring",
+  "布置场地": "Setting up the venue",
+  "朋友助攻": "Friends helping",
+  "瞒着 TA 保密": "Keeping it secret",
+  "筹划中最用心或最惊险的一个细节。": "The most thoughtful or nerve-wracking detail of the plan.",
+  "例：戒指藏在蛋糕里，差点被她先吃到": "e.g. The ring hidden in the cake was nearly eaten first",
+  "那一刻": "The moment",
+  "求婚那一刻": "The proposal itself",
+  "求婚在哪里（或打算在哪里）": "Where did (or will) the proposal happen?",
+  "户外": "Outdoors",
+  "餐厅": "Restaurant",
+  "家里": "At home",
+  "旅行中": "While traveling",
+  "第一次约会的地方": "Where you first dated",
+  "单膝跪地": "Down on one knee",
+  "拿出戒指": "Taking out the ring",
+  "说出那句话": "Saying the words",
+  "TA 哭了": "They cried",
+  "例：往后的路，换我牵着你走": "e.g. Let me hold your hand from now on",
+  "纪念日 / 周年": "Anniversary",
+  "纪念日故事采集卡": "Anniversary Story Card",
+  "片子什么时候看": "When will the film be watched?",
+  "决定结尾旁白怎么落、配乐快慢。": "This shapes the ending and musical pace.",
+  "纪念日当晚": "On the anniversary evening",
+  "聚会播放": "Played at a gathering",
+  "私下两人看": "Watched privately",
+  "初见": "First meeting",
+  "同行": "Walking together",
+  "转折": "The turning point",
+  "一起迈过的坎": "A hurdle you crossed together",
+  "异地": "Long distance",
+  "经济压力": "Financial strain",
+  "家人反对": "Family disapproval",
+  "事业变动": "Career changes",
+  "那段日子怎么过来的，谁做了什么？": "How did you get through it? Who did what?",
+  "例：异地两年，他每月坐五个小时火车来看我": "e.g. Two years apart; he took a five-hour train every month",
+  "坚守": "What held",
+  "这些年最\"我们\"的习惯": "The habit that feels most like you two",
+  "每天说晚安": "Saying goodnight daily",
+  "周末一起做饭": "Cooking together on weekends",
+  "每年一次旅行": "A trip every year",
+  "睡前聊天": "Talking before sleep",
+  "一个坚持到现在的习惯或小仪式。": "A habit or small ritual you keep to this day.",
+  "例：再忙周日早上也一起吃顿早午餐": "e.g. Sunday brunch together, no matter how busy",
+  "约定": "The next promise",
+  "下一个约定": "Your next promise",
+  "一次远行": "A long trip",
+  "一个新家": "A new home",
+  "一件想一起完成的事": "Something to accomplish together",
+  "例：下一个十年，还请多指教": "e.g. Here is to the next ten years",
+  "生日 / 寿辰": "Birthday",
+  "生日故事采集卡": "Birthday Story Card",
+  "寿星和你在视频里怎么称呼": "How should the celebrant and you be called in the film?",
+  "寿星": "The celebrant",
+  "你（送片人）": "You (the giver)",
+  "例：老爸": "e.g. Dad",
+  "例：女儿": "e.g. His daughter",
+  "请把寿星各个阶段的清晰照片（小时候、青年、近照），通过微信等方式另发给制作方。此处不上传照片。": "Send clear photos of the celebrant at different ages (childhood, youth, recent) to your creator in your existing conversation. There is no photo upload here.",
+  "老照片翻拍也可以，尽量清晰、正脸。": "Photos of old prints are fine; keep them clear and front-facing.",
+  "生日宴现场": "At the birthday banquet",
+  "聚会开场": "Opening a party",
+  "私下赠送": "Given privately",
+  "小时候": "Childhood",
+  "记忆里的 TA": "Them in your memory",
+  "调皮捣蛋": "Mischievous",
+  "懂事得早": "Mature for their age",
+  "爱读书": "Loved reading",
+  "闲不住": "Always on the move",
+  "一个小时候的画面，越具体越好。": "A childhood scene, as specific as possible.",
+  "例：她小时候总蹲在门口等爸爸下班": "e.g. She waited at the door every day for her father to come home",
+  "长大": "Growing up",
+  "TA 的年轻时代": "Their younger years",
+  "求学": "Studying",
+  "工作打拼": "Building a career",
+  "成家": "Starting a family",
+  "闯荡远方": "Venturing far from home",
+  "TA 年轻时的一件标志性的事。": "A signature story from their youth.",
+  "例：他二十出头一个人去了深圳": "e.g. He moved to Shenzhen alone in his early twenties",
+  "高光": "The proudest moment",
+  "TA 最让人佩服的一件事": "The thing you admire most about them",
+  "撑起一个家": "Holding a family together",
+  "事业有成": "A successful career",
+  "帮助他人": "Helping others",
+  "坚持一门手艺": "Mastering a craft",
+  "具体是什么事，你为什么佩服。": "What exactly happened, and why do you admire it?",
+  "例：妈妈一个人把我和哥哥拉扯大": "e.g. Mum raised my brother and me on her own",
+  "不易": "The hard times",
+  "TA 不容易的一段日子": "A hard chapter in their life",
+  "生病的日子": "Days of illness",
+  "为家操劳": "Working hard for the family",
+  "工作低谷": "Career lows",
+  "默默付出": "Quiet sacrifice",
+  "那段日子 TA 是怎么扛过来的。": "How did they get through those days?",
+  "例：那几年她白天上班晚上摆摊": "e.g. She worked by day and ran a street stall at night",
+  "祝福": "Blessings",
+  "此刻的祝福": "Your wishes now",
+  "健康长寿": "Health and long life",
+  "天天开心": "Happiness every day",
+  "慢下来享福": "Slow down and enjoy life",
+  "继续做自己": "Keep being yourself",
+  "想对 TA 说的一句话，会做结尾旁白。": "One thing you would like to say to them, for the closing narration.",
+  "例：爸，以后换我照顾你": "e.g. Dad, let me take care of you now",
+  "周岁宴": "First birthday",
+  "宝宝周岁故事采集卡": "Baby's First Year Story Card",
+  "宝宝和你（记录人）怎么称呼": "How should the baby and you be called in the film?",
+  "宝宝小名": "Baby's nickname",
+  "你是": "You are",
+  "例：豆豆": "e.g. Bean",
+  "例：妈妈": "e.g. Mum",
+  "请把宝宝清晰的正面照（出生、百天、近照），通过微信等方式另发给制作方。此处不上传照片。": "Send clear front-facing photos of the baby (newborn, 100 days, recent) to your creator in your existing conversation. There is no photo upload here.",
+  "正脸、光线好的照片效果最好；出生时的照片也建议提供。": "Front-facing photos in good light work best; newborn photos help too.",
+  "周岁宴现场": "At the first-birthday party",
+  "抓周环节": "During the zhuazhou ritual",
+  "亲友群分享": "Shared with family and friends",
+  "期待": "The wait",
+  "TA 到来之前": "Before the baby arrived",
+  "准备小衣服": "Preparing tiny clothes",
+  "起名字": "Choosing a name",
+  "想象 TA 的样子": "Imagining their face",
+  "孕期的辛苦与甜蜜": "The hard and sweet pregnancy days",
+  "等待 TA 时印象最深的一件事。": "The most memorable moment while waiting.",
+  "例：爸爸第一次听到胎心，激动得一晚没睡": "e.g. Dad heard the heartbeat and was too excited to sleep",
+  "出生那天": "The day they were born",
+  "产房外的等待": "Waiting outside the delivery room",
+  "第一声哭": "The first cry",
+  "第一次抱 TA": "Holding them for the first time",
+  "小小的手和脚": "Tiny hands and feet",
+  "出生那天的画面。": "A scene from the day they were born.",
+  "例：凌晨三点，护士把她抱出来，皱皱巴巴像个小老头": "e.g. At 3 a.m. the nurse brought her out, wrinkled like a little old man",
+  "第一次": "The firsts",
+  "TA 的第一次": "The baby's firsts",
+  "第一次笑": "First smile",
+  "第一次翻身": "First roll over",
+  "第一次爬": "First crawl",
+  "第一次叫爸妈": "First 'mama' or 'dada'",
+  "最难忘的一个\"第一次\"。": "The most unforgettable first.",
+  "例：八个月那天突然冲我喊了一声\"妈\"": "e.g. At eight months she suddenly called me 'mum'",
+  "日常": "Everyday moments",
+  "最治愈的日常": "The most heartwarming routine",
+  "睡着的样子": "How they look asleep",
+  "吃饭满脸": "Food all over their face",
+  "洗澡玩水": "Splashing at bath time",
+  "出门遛弯": "Going out for walks",
+  "一个百看不厌的日常画面。": "An everyday scene you never tire of.",
+  "例：她抱着奶瓶喝到睡着，嘴角还挂着奶": "e.g. She falls asleep holding her bottle, milk on her lips",
+  "想对一岁的 TA 说": "What to say to the one-year-old",
+  "健康长大": "Grow up healthy",
+  "慢慢长大": "Grow up slowly",
+  "勇敢去探索": "Explore bravely",
+  "永远被爱": "Always be loved",
+  "想对宝宝说的一句话，会做结尾旁白。": "One thing you would like to say to the baby, for the closing narration.",
+  "例：豆豆，这个世界很大，爸爸妈妈陪你慢慢看": "e.g. Bean, the world is big; Mum and Dad will explore it with you",
+  "毕业": "Graduation",
+  "毕业故事采集卡": "Graduation Story Card",
+  "主角和你在视频里怎么称呼": "How should the protagonist and you be called in the film?",
+  "主角": "The protagonist",
+  "你（记录人）": "You (the recorder)",
+  "例：阿哲": "e.g. Jay",
+  "例：室友": "e.g. His roommate",
+  "请把主角在校期间的照片（入学、课堂、活动、近照），通过微信等方式另发给制作方。此处不上传照片。": "Send photos of the protagonist at school (enrollment, classes, activities, recent) to your creator in your existing conversation. There is no photo upload here.",
+  "集体照请标注哪一位是主角。": "In group photos, please mark which person is the protagonist.",
+  "毕业典礼": "Graduation ceremony",
+  "散伙饭": "Farewell dinner",
+  "班级群分享": "Shared in the class group",
+  "入学": "Enrollment",
+  "第一天": "The first day",
+  "拖着行李报到": "Arriving with luggage",
+  "第一次进教室": "First time in the classroom",
+  "初见室友": "Meeting roommates",
+  "军训": "Military training",
+  "入学第一天印象最深的事。": "The most memorable moment of day one.",
+  "例：九月太阳很大，爸爸送我到宿舍楼下就走了": "e.g. The September sun was fierce; Dad dropped me at the dorm and left",
+  "同伴": "Companions",
+  "一起混的人": "The people you hung out with",
+  "室友": "Roommates",
+  "同桌": "Desk mates",
+  "社团伙伴": "Club friends",
+  "球队队友": "Teammates",
+  "和 TA 们最常做的一件事。": "The thing you did together most often.",
+  "例：宿舍四人每晚熄灯后开\"卧谈会\"": "e.g. The four of us held lights-out talks every night",
+  "挑战": "The challenge",
+  "最难的一段": "The hardest stretch",
+  "考试周": "Exam weeks",
+  "一场比赛": "A big match",
+  "一个项目": "A tough project",
+  "一段迷茫": "A lost period",
+  "最难的时候是什么样，怎么扛过来的。": "What was the hardest time like, and how did you get through it?",
+  "例：考研那年冬天，图书馆闭馆后去食堂背书": "e.g. During the exam winter I recited in the canteen after the library closed",
+  "最骄傲的一刻": "The proudest moment",
+  "拿奖": "Winning an award",
+  "上岸": "Getting accepted",
+  "演出成功": "A successful performance",
+  "被认可": "Being recognized",
+  "那一刻的画面。": "A picture of that moment.",
+  "例：名单念到我名字时，全宿舍喊得比我还大声": "e.g. When my name was read, my roommates shouted louder than I did",
+  "启程": "Setting off",
+  "想说的话": "What you want to say",
+  "谢谢同伴": "Thanking companions",
+  "谢谢老师": "Thanking teachers",
+  "给未来的自己": "To the future self",
+  "约定再聚": "Promising to reunite",
+  "想说的一句话，会做结尾旁白。": "One thing you would like to say, for the closing narration.",
+  "例：山水一程，三生有幸": "e.g. Lucky to have shared this journey",
+  "成长记录": "Growing up",
+  "成长故事采集卡": "Growing Up Story Card",
+  "主角和记录人怎么称呼": "How should the protagonist and the recorder be called?",
+  "记录人": "The recorder",
+  "例：果果": "e.g. Gogo",
+  "请把主角各成长阶段的清晰照片（小时候、各年级、近照），通过微信等方式另发给制作方。此处不上传照片。": "Send clear photos of the protagonist at different ages (childhood, school years, recent) to your creator in your existing conversation. There is no photo upload here.",
+  "成年礼": "Coming-of-age ceremony",
+  "生日": "Birthday",
+  "家庭聚会": "Family gathering",
+  "起点": "The beginning",
+  "最早的记忆画面": "Earliest memory",
+  "学走路": "Learning to walk",
+  "第一次上学": "First day of school",
+  "搬过的家": "Homes you moved between",
+  "小时候的模样": "How they looked as a child",
+  "最早的、或最常想起的一个画面。": "The earliest or most-recalled scene.",
+  "例：骑着小自行车在院子里转圈，怎么也学不会": "e.g. Circling the yard on a little bike, never quite getting it",
+  "痴迷": "Obsessions",
+  "曾经痴迷的事": "What they were obsessed with",
+  "画画": "Drawing",
+  "运动": "Sports",
+  "游戏": "Games",
+  "一个偶像": "An idol",
+  "痴迷到什么程度，有什么证据。": "How deep did the obsession go? Any proof?",
+  "例：整面墙贴满她画的画，作业本背面也是": "e.g. Her drawings covered the wall and the backs of exercise books",
+  "跌倒": "The fall",
+  "一次跌倒": "A fall",
+  "考试失利": "A failed exam",
+  "比赛输了": "A lost match",
+  "和朋友闹掰": "Falling out with a friend",
+  "一次生病": "An illness",
+  "那次跌倒是什么样，怎么爬起来的。": "What was the fall like, and how did they get back up?",
+  "例：比赛输了哭了一路，第二天照常去训练": "e.g. Cried all the way home, then trained as usual the next day",
+  "蜕变": "The change",
+  "忽然长大的瞬间": "The moment they suddenly grew up",
+  "独自出远门": "First solo trip",
+  "一次担当": "Taking responsibility",
+  "理解父母": "Understanding parents",
+  "找到方向": "Finding a direction",
+  "哪个瞬间觉得 TA 忽然长大了。": "Which moment made you feel they had suddenly grown up?",
+  "例：第一次自己坐高铁，到站给我发\"放心\"": "e.g. First solo train ride; texted me 'don't worry' on arrival",
+  "远方": "The road ahead",
+  "想对未来的自己说": "To the future self",
+  "保持热爱": "Keep the passion",
+  "别怕失败": "Fear no failure",
+  "慢慢走": "Take your time",
+  "常回家": "Come home often",
+  "例：愿你眼里的光一直在": "e.g. May the light in your eyes stay",
+  "旅行": "Travel",
+  "旅行故事采集卡": "Travel Story Card",
+  "同行人在视频里怎么称呼": "How should the travellers be called in the film?",
+  "我": "Me",
+  "同行人": "Travel companions",
+  "例：小雨和爸妈": "e.g. Emma and my parents",
+  "请把旅途中的人物与风景照，通过微信等方式另发给制作方。此处不上传照片。": "Send photos of the people and scenery from the trip to your creator in your existing conversation. There is no photo upload here.",
+  "人物正脸照和标志性风景照都建议提供。": "Front-facing portraits and landmark scenery shots both help.",
+  "旅行归来分享": "Shared after the trip",
+  "纪念日": "An anniversary",
+  "社交平台": "Social media",
+  "出发": "Setting off",
+  "为什么去那里": "Why that place?",
+  "种草已久": "Long on the wishlist",
+  "临时起意": "A whim",
+  "庆祝某件事": "Celebrating something",
+  "完成一个心愿": "Fulfilling a wish",
+  "出发前的心情或准备中的一件事。": "The mood before departure, or one thing from preparing.",
+  "例：她做了二十页攻略，结果第一天就全打乱了": "e.g. She wrote twenty pages of plans, all scrapped on day one",
+  "路上": "On the road",
+  "路上的画面": "Scenes along the way",
+  "车窗风景": "Views from the window",
+  "赶车赶飞机": "Rushing for transport",
+  "边走边吃": "Eating on the go",
+  "导航带错路": "Misled by the GPS",
+  "路上印象最深的一个画面。": "The most memorable scene along the way.",
+  "例：火车过隧道时，窗玻璃上全是我们的影子": "e.g. Our reflections filled the window as the train crossed a tunnel",
+  "意外": "The unexpected",
+  "计划外的事": "The unplanned",
+  "迷路": "Getting lost",
+  "坏天气": "Bad weather",
+  "错过车次": "A missed connection",
+  "意外惊喜": "A happy accident",
+  "那件计划外的事，后来怎么成了故事。": "How did the unplanned turn into a story?",
+  "例：暴雨困在小镇，却吃到最难忘的一碗面": "e.g. Trapped by rain in a small town, we had the best noodles ever",
+  "最值得的一刻": "The highlight",
+  "日出日落": "Sunrise or sunset",
+  "一顿美食": "A great meal",
+  "一个当地人": "A local you met",
+  "终于到达": "Finally arriving",
+  "例：凌晨五点爬到山顶，云一下子全散了": "e.g. We reached the summit at 5 a.m. and the clouds suddenly parted",
+  "回家": "Coming home",
+  "回来之后": "After coming home",
+  "想念那口味道": "Missing that taste",
+  "照片翻了很多遍": "Scrolling the photos again and again",
+  "计划下一趟": "Planning the next trip",
+  "更珍惜身边人": "Treasuring the people beside you",
+  "回来后最常想起的是什么。": "What do you think of most since coming home?",
+  "例：回来后一个月的壁纸都是那片海": "e.g. My wallpaper was that sea for a month",
+  "宠物": "Pet",
+  "宠物故事采集卡": "Pet Story Card",
+  "宠物和你怎么称呼": "How should the pet and you be called?",
+  "宠物名字": "Pet's name",
+  "TA 是什么（种类 / 品种）": "What they are (species / breed)",
+  "例：柯基，三岁": "e.g. A corgi, three years old",
+  "请把宠物清晰的正面照和日常照，通过微信等方式另发给制作方。此处不上传照片。": "Send clear front-facing and everyday photos of the pet to your creator in your existing conversation. There is no photo upload here.",
+  "正脸、眼睛清楚的照片效果最好。": "Front-facing photos with clear eyes work best.",
+  "相遇纪念日": "Adoption anniversary",
+  "TA 的生日": "Their birthday",
+  "告别纪念": "A farewell tribute",
+  "日常分享": "Everyday sharing",
+  "相遇": "Meeting",
+  "TA 怎么来到你家": "How did they come to your home?",
+  "领养": "Adopted",
+  "购买": "Bought",
+  "捡到的": "Found and rescued",
+  "朋友送的": "A gift from a friend",
+  "第一次见到 TA 的样子。": "How they looked when you first met.",
+  "例：雨天的纸箱里，它抖成一团": "e.g. Shivering in a cardboard box in the rain",
+  "最日常的画面": "The most everyday scene",
+  "等你回家": "Waiting for you to come home",
+  "干饭积极": "Enthusiastic eater",
+  "睡觉四仰八叉": "Sleeping sprawled out",
+  "特别黏人": "Very clingy",
+  "一个每天上演却百看不厌的画面。": "A daily scene you never tire of.",
+  "例：每天六点准时蹲在门口等我下班": "e.g. Waiting at the door at six sharp every day",
+  "趣事": "Funny stories",
+  "TA 干过的\"坏事\"": "Mischief they caused",
+  "拆家": "Wrecking the house",
+  "偷吃": "Stealing food",
+  "演戏装可怜": "Playing the victim",
+  "和别的动物吵架": "Quarrelling with other animals",
+  "最哭笑不得的一件事。": "The funniest or most exasperating incident.",
+  "例：咬坏了三双拖鞋，只咬左脚": "e.g. Chewed three pairs of slippers—only the left ones",
+  "守护": "Companion",
+  "TA 陪你度过的日子": "The days they kept you company",
+  "陪你熬夜": "Staying up with you",
+  "你难过时 TA 在": "Being there when you were sad",
+  "生病时的陪伴": "Company through illness",
+  "一起搬家": "Moving homes together",
+  "TA 陪你度过的一段日子。": "A chapter they got you through.",
+  "例：失恋那周，它一直把头搁在我腿上": "e.g. The week of my breakup, it rested its head on my lap",
+  "告白": "Words for them",
+  "想对 TA 说": "What you want to say",
+  "谢谢你来过": "Thank you for being here",
+  "要健康长久": "Stay healthy and live long",
+  "对不起陪你的时间少": "Sorry for the little time together",
+  "你是家人": "You are family",
+  "例：豆豆，谢谢你选了我们": "e.g. Bean, thank you for choosing us",
+  "家人 / 亲情": "Family",
+  "家人故事采集卡": "Family Story Card",
+  "片子的主角和你怎么称呼": "How should the protagonist and you be called?",
+  "主角（爸爸 / 妈妈 / …）": "Protagonist (Dad / Mum / ...)",
+  "你是谁": "Who you are",
+  "TA 的生日": "Their birthday",
+  "节日": "A festival",
+  "平常的一天": "An ordinary day",
+  "做饭的背影": "Their back while cooking",
+  "接送上下学": "School pick-ups and drop-offs",
+  "灯下缝补": "Mending under the lamp",
+  "严厉的样子": "Their strict side",
+  "小时候记忆里最清楚的 TA。": "Your clearest childhood memory of them.",
+  "例：每天放学，校门口总有他的自行车": "e.g. His bike was always at the school gate",
+  "一个画面": "One image",
+  "关于 TA 最清晰的画面": "The clearest image of them",
+  "一双手": "A pair of hands",
+  "一个习惯动作": "A habitual gesture",
+  "常坐的位置": "Their usual seat",
+  "常说的一句话": "Something they always say",
+  "那个画面是什么样。": "What does that image look like?",
+  "例：妈妈的手总是裂着口子，冬天贴满胶布": "e.g. Mum's hands were always cracked, taped up in winter",
+  "长大后才懂": "Understood only later",
+  "当时不懂的事": "What you only understood later",
+  "TA 的节省": "Their frugality",
+  "TA 的严厉": "Their strictness",
+  "TA 的沉默": "Their silence",
+  "TA 的等待": "Their waiting",
+  "哪件事是长大后才懂的。": "Which thing did you only understand after growing up?",
+  "例：他不是不爱说话，是累得不想说话": "e.g. He was not quiet; he was exhausted",
+  "现在的 TA": "Them today",
+  "TA 现在的样子": "How they are now",
+  "头发白了": "Hair gone grey",
+  "学会视频通话": "Learned video calls",
+  "在带孙辈": "Raising grandchildren",
+  "有了新的爱好": "Picked up new hobbies",
+  "现在的 TA 是什么样。": "What are they like now?",
+  "例：她学会了发语音，一条六十秒，全是叮嘱": "e.g. She learned voice messages—sixty seconds each, all reminders",
+  "想说": "What to say",
+  "谢谢": "Thank you",
+  "对不起": "I am sorry",
+  "我爱你": "I love you",
+  "换我来照顾你": "Let me care for you now",
+  "例：妈，这次换我牵你的手": "e.g. Mum, this time let me hold your hand",
+  "工作 / 事业": "Career",
+  "事业故事采集卡": "Career Story Card",
+  "主角在视频里怎么称呼": "How should the protagonist be called in the film?",
+  "主角（我 / 团队）": "Protagonist (me / the team)",
+  "行业或岗位": "Industry or role",
+  "例：我们团队": "e.g. Our team",
+  "例：餐饮创业者": "e.g. A restaurant founder",
+  "请把工作场景、团队、产品或门店的照片，通过微信等方式另发给制作方。此处不上传照片。": "Send photos of the workplace, team, products or storefront to your creator in your existing conversation. There is no photo upload here.",
+  "早期照片与现在的对比照效果最好。": "Early photos alongside current ones work best.",
+  "年会": "Annual party",
+  "周年庆": "Company anniversary",
+  "离职纪念": "Farewell tribute",
+  "项目庆功": "Project celebration",
+  "入行": "Starting out",
+  "为什么选这行": "Why this line of work?",
+  "热爱": "Passion",
+  "误打误撞": "By accident",
+  "家庭影响": "Family influence",
+  "一个契机": "An opportunity",
+  "入行那年的状态。": "What life looked like the year you started.",
+  "例：刚毕业，全部家当一个行李箱": "e.g. Fresh graduate, all belongings in one suitcase",
+  "碰壁": "The wall",
+  "最难的时刻": "The hardest moment",
+  "没单子": "No orders",
+  "被否定": "Being rejected",
+  "资金断裂": "Running out of money",
+  "团队散了": "The team fell apart",
+  "最难的一次是什么样。": "What was the hardest time like?",
+  "例：连续三个月没开张，房租都交不起": "e.g. Three months without a single order; rent was due",
+  "怎么挺过来的": "How you pulled through",
+  "贵人相助": "Help from a mentor",
+  "死磕到底": "Sheer persistence",
+  "换了个方向": "A change of direction",
+  "团队没散": "The team held together",
+  "转折是怎么发生的。": "How did the turn happen?",
+  "例：一个老客户介绍了整层写字楼的单子": "e.g. A regular client brought us a whole office building",
+  "最有成就感的事": "The most rewarding achievement",
+  "第一单": "The first order",
+  "一次认可": "A moment of recognition",
+  "做成大项目": "Landing a big project",
+  "带出了人": "Mentoring someone",
+  "例：徒弟独立签下第一单，比我自己签还激动": "e.g. My apprentice closed her first deal—I was more thrilled than with my own",
+  "下一站": "The next stop",
+  "想对同行人说": "To fellow travellers",
+  "感谢团队": "Thanking the team",
+  "继续死磕": "Keep pushing",
+  "不忘初心": "Staying true",
+  "下一个目标": "The next goal",
+  "例：路还长，咱们慢慢走": "e.g. The road is long; let us take our time",
+  "品牌 / 产品": "Brand / Product",
+  "品牌故事采集卡": "Brand Story Card",
+  "品牌和讲述人怎么称呼": "How should the brand and narrator be called?",
+  "品牌名": "Brand name",
+  "创始人 / 团队": "Founder / team",
+  "例：山茶事务所": "e.g. Camellia Studio",
+  "例：主理人阿茶": "e.g. Founder Cha",
+  "请把产品、门店、团队工作照，通过微信等方式另发给制作方。此处不上传照片。": "Send photos of the products, storefront and team at work to your creator in your existing conversation. There is no photo upload here.",
+  "产品细节照和早期老照片都建议提供。": "Product close-ups and early photos both help.",
+  "片子在哪里用": "Where will the film be used?",
+  "发布会": "A launch event",
+  "官网 / 详情页": "Website / product page",
+  "招商加盟": "Partnership pitches",
+  "为什么做这个品牌": "Why this brand?",
+  "自己的痛点": "A personal pain point",
+  "看不惯行业现状": "Frustration with the industry",
+  "一门手艺": "A craft",
+  "一个理想": "An ideal",
+  "起心动念的那一刻。": "The moment the idea was born.",
+  "例：找不到一杯不加香精的茶，干脆自己做": "e.g. Could not find tea without flavouring, so I made my own",
+  "坚持": "Holding on",
+  "最难时没放弃的原因": "Why you did not quit at the hardest time",
+  "用户鼓励": "Encouragement from users",
+  "团队": "The team",
+  "信念": "Conviction",
+  "没有退路": "No way back",
+  "最难的时候是什么样，靠什么撑住。": "What was the hardest time, and what kept you going?",
+  "例：小店连续亏损，是一条用户留言让我们撑下去": "e.g. Months of losses; one user message kept us going",
+  "关键转折": "The turning point",
+  "第一个爆款": "The first hit product",
+  "一次曝光": "A moment of exposure",
+  "调整定位": "Repositioning",
+  "熬过淡季": "Surviving the off-season",
+  "例：一条素人视频突然带火了我们": "e.g. A customer's video suddenly made us famous",
+  "成果": "Proof",
+  "被认可的证据": "Proof of recognition",
+  "复购和口碑": "Repeat purchases and word of mouth",
+  "媒体报道": "Media coverage",
+  "行业奖项": "Industry awards",
+  "用户来信": "Letters from users",
+  "最让你们自豪的一个认可。": "The recognition you are proudest of.",
+  "例：有用户把我们的包装攒了一整面墙": "e.g. A customer collected a whole wall of our packaging",
+  "愿景": "Vision",
+  "想对用户说": "To your users",
+  "谢谢陪伴": "Thank you for staying",
+  "坚持初心": "Staying true",
+  "新品预告": "A preview of what is next",
+  "一个承诺": "A promise",
+  "想对用户说的一句话，会做结尾旁白。": "One thing you would like to say to users, for the closing narration.",
+  "例：谢谢你们的挑剔，让我们不敢偷懒": "e.g. Thank you for being picky; it keeps us honest",
+  "宠物，名字": "Pet and name",
+  "例：柯基「豆豆」": "e.g. Our corgi, Bean",
+  "一个有意义的地方": "A meaningful place",
+  "例：学校后门的奶茶店": "e.g. The tea shop behind our school",
+  "一件有意义的物品": "A meaningful object",
+  "例：第一次约会的电影票": "e.g. Our first-date cinema ticket",
+  "一首歌": "A song",
+  "例：他们大学时常听的那首": "e.g. The song we used to play at university",
+  "一句常说的话": "Something often said",
+  "例：走啦，回家": "e.g. Come on, let us go home"
 };
 const tr = text => LANG==='en' ? (EN[text] ?? text) : text;
 const comma=LANG==='en'?', ':'、';
+
+/* ============ 渲染 ============ */
+let themeKey=null;   // 当前题材
+function chips(host, name, opts, otherPh){
+  const h = typeof host==='string' ? $(host) : host;
+  let html = opts.map((o,i)=>{ const [label,val] = Array.isArray(o)?o:[o,o];
+    return `<span class="chip"><input type="radio" name="${name}" id="${name}_${i}" value="${esc(val)}"><label for="${name}_${i}">${esc(label)}</label></span>`; }).join('');
+  html += `<span class="chip other"><input type="radio" name="${name}" id="${name}_x" value="其他"><label for="${name}_x">其他</label><input type="text" id="${name}_other" placeholder="${esc(otherPh||'自己写一个')}" aria-label="其他，请填写"></span>`;
+  h.innerHTML = html;
+}
+function setRadio(name,val){ const r=document.querySelector(`input[name="${name}"][value="${val}"]`); if(r) r.checked=true; }
+
+/* 题材 chips */
+chips('#theme','theme',THEME_KEYS.map(k=>[THEMES[k].t,k]));
+document.querySelector('#theme .chip.other').remove();   // 题材不提供"其他"
+
+let qno=0;
+function renderTheme(key){
+  themeKey=key; const T=THEMES[key]; qno=0;
+  document.title=T.title; $('#appTitle').textContent=T.title;
+  const q=(inner)=>{qno++;return `<span class="q-n">${qno}</span>`+inner;};
+  let h=`
+  <section id="s0">
+    <div class="eyebrow"><span>基本信息</span></div>
+    <h2>先认识一下<small>全部必答</small></h2>
+    <div class="q"><div class="q-h">${q('<span class="q-t">视频尺寸</span>')}</div><div class="chips" id="ratio"></div></div>
+    <div class="q"><div class="q-h">${q(`<span class="q-t">${T.who.ask}</span>`)}</div>
+      <div class="row two">
+        <div class="field"><label for="whoA">${esc(T.who.a)}</label><input type="text" id="whoA" placeholder="${esc(T.who.aph)}"></div>
+        <div class="field"><label for="whoB">${esc(T.who.b)}</label><input type="text" id="whoB" placeholder="${esc(T.who.bph)}"></div>
+      </div></div>
+    <div class="q"><div class="q-h">${q('<span class="q-t">照片</span>')}</div>
+      <div class="row"><p class="why">${esc(T.photo)}</p></div>
+      <div class="hint">${esc(T.photoHint)}</div></div>
+    <div class="q"><div class="q-h">${q(`<span class="q-t">${T.occ.ask}</span>`)}</div>
+      <div class="q-sub">${esc(T.occ.sub)}</div>
+      <div class="chips" id="occasion"></div></div>
+    <div class="q"><div class="q-h">${q('<span class="q-t">时长</span>')}</div>
+      <div class="q-sub">先选希望的片长，五幕按故事轻重分配；具体镜头根据后续旁白的实际节奏安排。</div>
+      <div class="chips" id="duration"></div></div>
+    <div class="q"><div class="q-h">${q('<span class="q-t">画风</span>')}</div>
+      <div class="chips" id="style"></div>
+      <div class="sub" id="styleSub" hidden>
+        <div class="q-h"><span class="q-t">这个画风里，主角怎么出现</span></div>
+        <div class="chips" id="styleMode"></div>
+        <div class="hint" style="margin-left:0">"真人出镜"：脸和身材按照片来，环境和质感是动画；"纯动画"：主角也画成动画形象；画风选了"其他"且是写实的，选"写实真人"。这一项直接决定生图提示词怎么写。</div>
+      </div></div>
+  </section>
+  <div id="acts"></div>
+  <section id="s6">
+    <div class="eyebrow"><span>加减项</span></div>
+    <h2>想加的，不想要的<small>选填，建议填</small></h2>
+    <p class="why">这里的东西会直接变成画面里的道具、地点和旁白里的一句话，是片子最像"你们"的部分。</p>
+    <div class="q"><div class="q-h">${q('<span class="q-t">想放进去的东西</span>')}<span class="q-k rec">建议填</span></div>
+      <div class="checks" id="adds"></div></div>
+    <div class="q"><div class="q-h">${q('<span class="q-t">不想出现的东西</span>')}<span class="q-k rec">建议填</span></div>
+      <div class="row"><textarea id="avoid" placeholder="例：不出现前任、不出现酒"></textarea></div></div>
+    <div class="q"><div class="q-h">${q('<span class="q-t">五幕里有没有想换掉的一幕，换成什么</span>')}<span class="q-k">选填</span></div>
+      <div class="row"><input type="text" id="swap" placeholder="例：第四幕换成和爸妈一起过年" ></div></div>
+  </section>
+  <section id="s7">
+    <div class="eyebrow"><span>音乐</span></div>
+    <h2>配乐<small>选填，只收不带歌词的纯音乐</small></h2>
+    <div class="q"><div class="q-h">${q('<span class="q-t">有没有想用的纯音乐</span>')}</div>
+      <div class="chips" id="music"></div>
+      <div class="hint">带歌词的歌和旁白会打架，所以只收纯音乐。没有合适的，制作方用音乐模型按片子情绪定制一首。</div></div>
+  </section>
+  <section id="s8">
+    <div class="eyebrow"><span>备注</span></div>
+    <h2>还有什么想法<small>必答，任何想法都写这里</small></h2>
+    <div class="q"><div class="q-h">${q('<span class="q-t">注意点、参考、想法</span>')}</div>
+      <div class="q-sub">想要的画面质感、参考的电影或照片、特别在意的地方、怕出错的地方，都写。写得越具体，片子越像你们想的那样。</div>
+      <div class="row"><textarea id="notes" placeholder="例：画面想要日系电影那种朦胧、精致的质感；旁白别太煽情；他不喜欢正面特写"></textarea></div></div>
+  </section>`;
+  $('#themeBody').innerHTML=h;
+  chips('#ratio','ratio',COMMON.ratio,'例：1:1 方形');
+  chips('#occasion','occasion',T.occ.opts,'自己写一个');
+  chips('#duration','duration',COMMON.duration,'例：120 秒');
+  chips('#style','style',COMMON.style,'例：岩井俊二《花与爱丽丝》那种质感');
+  chips('#styleMode','styleMode',COMMON.styleMode,'自己写');
+  $('#music').innerHTML = `<span class="chip other"><input type="radio" name="music" id="music_own" value="自带"><label for="music_own">我有想用的纯音乐</label><input type="text" id="music_own_t" placeholder="曲名 / 作者 / 链接，不带歌词" aria-label="曲名"></span><span class="chip"><input type="radio" name="music" id="music_us" value="制作方定制"><label for="music_us">交给制作方定制</label></span>`;
+  $('#acts').innerHTML = T.acts.map((a,i)=>{const id='a'+(i+1);return `
+  <section id="${id}">
+    <div class="eyebrow"><span>${a.n}</span></div>
+    <h2>${a.name}<small>${a.ask}</small></h2>
+    ${a.venue?`<div class="q">
+      <div class="q-h">${q(`<span class="q-t">${a.venue.ask}</span>`)}</div>
+      <div class="chips" id="${id}_venue_chips"></div>
+    </div>`:''}
+    <div class="q">
+      <div class="q-h">${q(`<span class="q-t">${a.venue?'结尾动作':'选一个'}</span>`)}</div>
+      <div class="chips" id="${id}_chips"></div>
+    </div>
+    <div class="q">
+      <div class="q-h">${q('<span class="q-t">填一个</span>')}</div>
+      <div class="q-sub">${esc(a.fill.ask)}</div>
+      <div class="row"><input type="text" id="${id}_fill" placeholder="${esc(a.fill.ph)}"></div>
+    </div>
+    ${a.extra?`<div class="q">
+      <div class="q-h">${q('<span class="q-t">加一个</span>')}<span class="q-k">选填</span></div>
+      <div class="q-sub">${esc(a.extra.ask)}</div>
+      <div class="row"><input type="text" id="${id}_extra" placeholder="${esc(a.extra.ph)}"></div>
+    </div>`:''}
+  </section>`;}).join('');
+  T.acts.forEach((a,i)=>{const id='a'+(i+1);chips('#'+id+'_chips', id+'_pick', a.opts, '写一个场景'); if(a.venue) chips('#'+id+'_venue_chips', id+'_venue', a.venue.opts, '例：民宿院子');});
+  $('#adds').innerHTML = COMMON.adds.map(([k,label,ph])=>`
+  <div class="check"><label><input type="checkbox" id="add_${k}">${esc(label)}</label><input type="text" id="add_${k}_t" placeholder="${esc(ph)}" aria-label="${esc(label)}"></div>`).join('');
+  $('#actChips').innerHTML = T.acts.map((a,i)=>`<span class="act" id="ac_a${i+1}">${a.name}</span>`).join('');
+  /* 单选 chips 组语义：label 取自所属小题的 .q-t 文本；在 translateStatic() 前设置以随界面语言翻译 */
+  document.querySelectorAll('.chips').forEach(c=>{
+    const host=c.closest('.sub')||c.closest('.q');
+    const t=host&&host.querySelector('.q-t');
+    c.setAttribute('role','radiogroup');
+    if(t)c.setAttribute('aria-label',t.textContent.trim());
+  });
+  setRadio('ratio','宽屏 16:9');setRadio('duration','90 秒');
+  $('#themeBody').hidden=false;
+}
+
+/* ============ 状态与故事卡 ============ */
+const v = id => { const el = document.getElementById(id); return el ? (el.type==='checkbox' ? el.checked : el.value.trim()) : ''; };
+const radio = name => { const r = document.querySelector(`input[name="${name}"]:checked`); return r ? r.value : ''; };
+function pick(name){ const r = radio(name); if(r==='其他'){ const t = v(name+'_other'); return t ? tr('其他')+': '+t : ''; } return tr(r); }
+const needMode = () => { const r = radio('style'); return !!r && r!=='写实电影感'; };
+
+function build(){
+  const U='<span class="u">'+tr('未填')+'</span>', need=[],html=[],text=[];
+  const colon=LANG==='en'?': ':'：';
+  const L=(h,t)=>{html.push(h);text.push(t);};
+  const cell=(val,label)=>{if(val)return [esc(val),val];need.push(tr(label));return [U,tr('未填')];};
+  if(!themeKey){
+    need.push(tr('题材'));
+    L(tr('题材')+colon+U,tr('题材')+colon+tr('未填'));
+    L('<span class="m">'+tr('先选题材')+'</span>',tr('先选题材'));
+    finishBuild(1,need,html,text);return;
+  }
+  const T=THEMES[themeKey];
+  $('#styleSub').hidden=!needMode();
+  const rows=[['题材',tr(T.t)],['称呼',v('whoA')&&v('whoB')?v('whoA')+' / '+v('whoB'):''],['尺寸',pick('ratio')],['场合',pick('occasion')],['时长',pick('duration')]];
+  let sty=pick('style');
+  if(sty&&needMode()){const mode=pick('styleMode');if(!mode)need.push(tr('画风里主角怎么出现'));sty+=' · '+(mode||tr('未填'));}
+  rows.push(['画风',sty]);
+  const parts=rows.map(([label,value])=>{const [h,t]=cell(value,label);return [tr(label)+colon+h,tr(label)+colon+t];});
+  L(parts.map(x=>x[0]).join('　　'),parts.map(x=>x[1]).join('　　'));
+  L(tr('照片：原图通过聊天另发，不包含在复制文字中'),tr('照片：原图通过聊天另发，不包含在复制文字中'));
+  T.acts.forEach((a,i)=>{
+    const id='a'+(i+1);
+    const p=pick(id+'_pick'),f=v(id+'_fill');
+    const prefix=tr(a.n)+(LANG==='en'?' ':'');
+    const [pH,pT]=cell(p,prefix+tr(a.venue?'结尾动作':'场景'));
+    const [fH,fT]=cell(f,prefix+tr(a.venue?'结尾一句':'细节'));
+    let h=tr(a.n)+' '+tr(a.name)+colon,t=h;
+    if(a.venue){const [vH,vT]=cell(pick(id+'_venue'),prefix+tr('场地'));h+=vH+' ｜ '+pH+' ｜ '+tr('结尾一句')+colon+fH;t+=vT+' ｜ '+pT+' ｜ '+tr('结尾一句')+colon+fT;}
+    else{h+=pH+' ｜ '+fH;t+=pT+' ｜ '+fT;if(a.extra){const x=v(id+'_extra');h+=' ｜ '+tr('加')+colon+(x?esc(x):'<span class="m">—</span>');t+=' ｜ '+tr('加')+colon+(x||'—');}}
+    document.getElementById('ac_'+id).classList.toggle('on',!!p&&!!f&&(!a.venue||!!pick(id+'_venue')));L(h,t);
+  });
+  const adds=COMMON.adds.filter(([k])=>v('add_'+k)||v('add_'+k+'_t')).map(([k,label])=>{const value=v('add_'+k+'_t');return tr(label.replace('，名字',''))+(value?'「'+value+'」':'');}).join(comma);
+  const extras=[['加项',adds],['禁忌',v('avoid')],['换幕',v('swap')]];
+  L(extras.map(([label,value])=>tr(label)+colon+(value?esc(value):'<span class="m">—</span>')).join('　　'),extras.map(([label,value])=>tr(label)+colon+(value||'—')).join('　　'));
+  const mu=radio('music'),muT=mu==='自带'?tr('自带纯音乐')+(v('music_own_t')?'「'+v('music_own_t')+'」':tr('（曲名待补）')):tr('制作方定制');
+  L(tr('音乐')+colon+esc(muT),tr('音乐')+colon+muT);
+  const [nH,nT]=cell(v('notes'),'备注');L(tr('备注')+colon+nH,tr('备注')+colon+nT);
+  L('<span class="m">'+tr('旁白：第三人称讲述（固定）')+'</span>',tr('旁白：第三人称讲述（固定）'));
+  /* 必答格数：题材 1 + 基本信息 5 + 五幕（venue 幕 3 格，其余 2 格）+ 备注 1 */
+  const total=1+5+T.acts.reduce((s,a)=>s+(a.venue?3:2),0)+1+(needMode()?1:0);
+  finishBuild(total,need,html,text);
+}
+
+/* ============ 草稿 ============ */
+const KEY='story-intake-v2';
+function fields(){ const o={}; document.querySelectorAll('main input,main textarea').forEach(el=>{ if(!el.id) return; o[el.id]= (el.type==='checkbox'||el.type==='radio') ? el.checked : el.value; }); return o; }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify({t:themeKey,f:fields()})); }catch(e){ $('#submitTip').textContent=tr('当前浏览器不能保存草稿，请填好后及时复制，照片原图另发。'); } }
+function load(){ try{ const o=JSON.parse(localStorage.getItem(KEY)||'null'); if(!o)return; if(o.t&&THEMES[o.t]){renderTheme(o.t);setRadio('theme',o.t);} Object.keys(o.f||{}).forEach(id=>{ const el=document.getElementById(id);if(!el)return;if(el.type==='checkbox'||el.type==='radio')el.checked=!!o.f[id];else el.value=o.f[id]; }); }catch(e){} }
+function reset(){ themeKey=null; document.title=tr('故事采集卡'); $('#appTitle').textContent=tr('故事采集卡'); $('#themeBody').hidden=true; $('#themeBody').innerHTML=''; $('#actChips').innerHTML=''; document.querySelectorAll('input[name="theme"]').forEach(r=>r.checked=false); $('#copyFallback').hidden=true; const u=new URL(location.href);u.searchParams.delete('theme');history.replaceState(null,'',u); }
+
+/* ============ 事件 ============ */
+let tt; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2400); }
+async function copyCard(){
+  build();
+  if(build.need.length){ toast(tr('请补充：')+build.need.join(comma)+tr('。没有或记不清可如实填写。')); return; }
+  const t=build.text;
+  try{ await navigator.clipboard.writeText(t);toast(tr('已复制，把故事卡和原图通过微信发回制作方')); }
+  catch(e){ const el=$('#copyFallback');el.value=t;el.hidden=false;el.focus();el.select();el.setSelectionRange(0,t.length);toast(tr('请长按文字全选复制，电脑也可按 Ctrl / ⌘ + C')); }
+}
+/* 渲染防抖：连续输入只触发一次 build；save 保持同步，复制与刷新前不落盘的风险不变 */
+let bt;function scheduleBuild(){clearTimeout(bt);bt=setTimeout(build,120);}
+document.addEventListener('input', e=>{if(e.target.id==='copyFallback')return;$('#copyFallback').hidden=true;save();scheduleBuild();});
+document.addEventListener('change', e=>{
+  if(e.target.name==='theme'){
+    /* 切换题材：保留草稿，重渲染新题材（旧字段不迁移） */
+    renderTheme(e.target.value);
+    const url=new URL(location.href);url.searchParams.set('theme',e.target.value);history.replaceState(null,'',url);
+    translateStatic();save();
+  }
+  /* 画风选了非写实项时立即展开第二问，不等防抖渲染 */
+  if(e.target.name==='style'){const r=radio('style');$('#styleSub').hidden=!(r&&r!=='写实电影感');}
+  save();scheduleBuild();
+});
+$('#btnCopy').addEventListener('click',copyCard);
+$('#btnClear').addEventListener('click',()=>{if(!confirm(tr('清空本机这份填写草稿？')))return;reset();try{localStorage.removeItem(KEY);}catch(e){}build();toast(tr('已清空'));});
+
+/* ============ 翻译与初始化 ============ */
 function translateStatic(){
  document.documentElement.lang=LANG==='en'?'en':'zh-CN';document.title=tr(document.title);
  if(LANG==='en'){
@@ -485,111 +1271,17 @@ function translateStatic(){
  const link=$('#langToggle');link.textContent=LANG==='en'?'中文':'English';const url=new URL(location.href);url.searchParams.set('lang',LANG==='en'?'zh':'en');link.href=url.href;
 }
 
-function chips(host, name, opts, otherPh){
-  const h = typeof host==='string' ? $(host) : host;
-  let html = opts.map((o,i)=>{ const [label,val] = Array.isArray(o)?o:[o,o];
-    return `<span class="chip"><input type="radio" name="${name}" id="${name}_${i}" value="${esc(val)}"><label for="${name}_${i}">${esc(label)}</label></span>`; }).join('');
-  html += `<span class="chip other"><input type="radio" name="${name}" id="${name}_x" value="其他"><label for="${name}_x">其他</label><input type="text" id="${name}_other" placeholder="${esc(otherPh||'自己写一个')}" aria-label="其他，请填写"></span>`;
-  h.innerHTML = html;
-}
-chips('#ratio','ratio',SPEC.ratio,'例：1:1 方形');
-chips('#occasion','occasion',SPEC.occasion,'例：敬酒环节');
-chips('#duration','duration',SPEC.duration,'例：120 秒');
-chips('#style','style',SPEC.style,'例：岩井俊二《花与爱丽丝》那种质感');
-chips('#styleMode','styleMode',SPEC.styleMode,'自己写');
-$('#music').innerHTML = `<span class="chip other"><input type="radio" name="music" id="music_own" value="自带"><label for="music_own">我有想用的纯音乐</label><input type="text" id="music_own_t" placeholder="曲名 / 作者 / 链接，不带歌词" aria-label="曲名"></span><span class="chip"><input type="radio" name="music" id="music_us" value="制作方定制"><label for="music_us">交给制作方定制</label></span>`;
-
-$('#acts').innerHTML = SPEC.acts.map(a=>`
-<section id="${a.id}">
-  <div class="eyebrow"><span>${a.n}</span></div>
-  <h2>${a.name}<small>${a.ask}</small></h2>
-  ${a.venue?`<div class="q">
-    <div class="q-h"><span class="q-n">${a.venue.q}</span><span class="q-t">婚礼在哪办</span></div>
-    <div class="q-sub">决定这一幕画在什么地方、什么光线。</div>
-    <div class="chips" id="${a.id}_venue_chips"></div>
-  </div>`:''}
-  <div class="q">
-    <div class="q-h"><span class="q-n">${a.qPick}</span><span class="q-t">${a.venue?'结尾动作':'选一个'}</span></div>
-    <div class="chips" id="${a.id}_chips"></div>
-  </div>
-  <div class="q">
-    <div class="q-h"><span class="q-n">${a.fill.q}</span><span class="q-t">填一个</span></div>
-    <div class="q-sub">${esc(a.fill.ask)}</div>
-    <div class="row"><input type="text" id="${a.id}_fill" placeholder="${esc(a.fill.ph)}"></div>
-  </div>
-  ${a.extra?`<div class="q">
-    <div class="q-h"><span class="q-n">${a.extra.q}</span><span class="q-t">加一个</span><span class="q-k">选填</span></div>
-    <div class="q-sub">${esc(a.extra.ask)}</div>
-    <div class="row"><input type="text" id="${a.id}_extra" placeholder="${esc(a.extra.ph)}"></div>
-  </div>`:''}
-</section>`).join('');
-SPEC.acts.forEach(a=>{ chips('#'+a.id+'_chips', a.id+'_pick', a.opts, '写一个场景'); if(a.venue) chips('#'+a.id+'_venue_chips', a.id+'_venue', a.venue.opts, '例：民宿院子'); });
-$('#adds').innerHTML = SPEC.adds.map(([k,label,ph])=>`
-<div class="check"><label><input type="checkbox" id="add_${k}">${esc(label)}</label><input type="text" id="add_${k}_t" placeholder="${esc(ph)}" aria-label="${esc(label)}"></div>`).join('');
-$('#actChips').innerHTML = SPEC.acts.map(a=>`<span class="act" id="ac_${a.id}">${a.name}</span>`).join('');
-
-const v = id => { const el = document.getElementById(id); return el ? (el.type==='checkbox' ? el.checked : el.value.trim()) : ''; };
-const radio = name => { const r = document.querySelector(`input[name="${name}"]:checked`); return r ? r.value : ''; };
-function pick(name){ const r = radio(name); if(r==='其他'){ const t = v(name+'_other'); return t ? tr('其他')+': '+t : ''; } return tr(r); }
-const needMode = () => { const r = radio('style'); return !!r && r!=='写实电影感'; };
-
-function build(){
-  $('#styleSub').hidden=!needMode();
-  const U='<span class="u">'+tr('未填')+'</span>', need=[],html=[],text=[];
-  const L=(h,t)=>{html.push(h);text.push(t);};
-  const cell=(val,label)=>{if(val)return [esc(val),val];need.push(tr(label));return [U,tr('未填')];};
-  const rows=[['称呼',v('groom')&&v('bride')?v('groom')+' / '+v('bride'):''],['尺寸',pick('ratio')],['场合',pick('occasion')],['时长',pick('duration')]];
-  let sty=pick('style');
-  if(sty&&needMode()){const mode=pick('styleMode');if(!mode)need.push(tr('画风里两人怎么出现'));sty+=' · '+(mode||tr('未填'));}
-  rows.push(['画风',sty]);
-  const parts=rows.map(([label,value])=>{const [h,t]=cell(value,label);return [tr(label)+'：'+h,tr(label)+'：'+t];});
-  L(parts.map(x=>x[0]).join('　　'),parts.map(x=>x[1]).join('　　'));
-  L(tr('照片：原图通过聊天另发，不包含在复制文字中'),tr('照片：原图通过聊天另发，不包含在复制文字中'));
-  SPEC.acts.forEach(a=>{
-    const p=pick(a.id+'_pick'),f=v(a.id+'_fill');
-    const prefix=tr(a.n)+(LANG==='en'?' ':'');
-    const [pH,pT]=cell(p,prefix+tr(a.venue?'结尾动作':'场景'));
-    const [fH,fT]=cell(f,prefix+tr(a.venue?'结尾一句':'细节'));
-    let h=tr(a.n)+' '+tr(a.name)+'：',t=h;
-    if(a.venue){const [vH,vT]=cell(pick(a.id+'_venue'),prefix+tr('场地'));h+=vH+' ｜ '+pH+' ｜ '+tr('结尾一句')+'：'+fH;t+=vT+' ｜ '+pT+' ｜ '+tr('结尾一句')+'：'+fT;}
-    else{h+=pH+' ｜ '+fH;t+=pT+' ｜ '+fT;if(a.extra){const x=v(a.id+'_extra');h+=' ｜ '+tr('加')+'：'+(x?esc(x):'<span class="m">—</span>');t+=' ｜ '+tr('加')+'：'+(x||'—');}}
-    document.getElementById('ac_'+a.id).classList.toggle('on',!!p&&!!f&&(!a.venue||!!pick(a.id+'_venue')));L(h,t);
-  });
-  const adds=SPEC.adds.filter(([k])=>v('add_'+k)||v('add_'+k+'_t')).map(([k,label])=>{const value=v('add_'+k+'_t');return tr(label.replace('，名字',''))+(value?'「'+value+'」':'');}).join(comma);
-  const extras=[['加项',adds],['禁忌',v('avoid')],['换幕',v('swap')]];
-  L(extras.map(([label,value])=>tr(label)+'：'+(value?esc(value):'<span class="m">—</span>')).join('　　'),extras.map(([label,value])=>tr(label)+'：'+(value||'—')).join('　　'));
-  const mu=radio('music'),muT=mu==='自带'?tr('自带纯音乐')+(v('music_own_t')?'「'+v('music_own_t')+'」':tr('（曲名待补）')):tr('制作方定制');
-  L(tr('音乐')+'：'+esc(muT),tr('音乐')+'：'+muT);
-  const [nH,nT]=cell(v('notes'),'备注');L(tr('备注')+'：'+nH,tr('备注')+'：'+nT);
-  L('<span class="m">'+tr('旁白：第三人称讲述（固定）')+'</span>',tr('旁白：第三人称讲述（固定）'));
-  L(tr('未填')+'：'+(need.length?'<span class="u">'+esc(need.join(comma))+'</span>':tr('无，可以复制')),tr('未填')+'：'+(need.length?need.join(comma):tr('无，可以复制')));
+/* build 收尾：渲染故事卡与进度（独立函数供两条路径复用） */
+function finishBuild(total,need,html,text){
   $('#cardBody').innerHTML=html.join('\n');build.text=text.join('\n');build.need=need;
-  const total=17+(needMode()?1:0),n=Math.max(0,total-need.length);
+  const n=Math.max(0,total-need.length);
   $('#fill').style.width=(n/total*100)+'%';$('#progt').textContent=tr('必答')+' '+n+' / '+total+(need.length===0?' · '+tr('可以复制'):'');
   $('#prog').classList.toggle('done',need.length===0);
 }
 
-/* 本地文字草稿；不含照片或联系方式，不连接后台 */
-const KEY='wedding-intake-copy-v1';
-function fields(){ const o={}; document.querySelectorAll('main input,main textarea').forEach(el=>{ if(!el.id) return; o[el.id]= (el.type==='checkbox'||el.type==='radio') ? el.checked : el.value; }); return o; }
-function save(){ try{ localStorage.setItem(KEY,JSON.stringify(fields())); }catch(e){ $('#submitTip').textContent=tr('当前浏览器不能保存草稿，请填好后及时复制，照片原图另发。'); } }
-function load(){ try{ const o=JSON.parse(localStorage.getItem(KEY)||'null'); if(!o)return false; Object.keys(o).forEach(id=>{ const el=document.getElementById(id);if(!el)return;if(el.type==='checkbox'||el.type==='radio')el.checked=!!o[id];else el.value=o[id]; });return true; }catch(e){return false;} }
-function reset(){ document.querySelectorAll('input,textarea').forEach(el=>{if(el.type==='checkbox'||el.type==='radio')el.checked=false;else el.value='';});setRadio('ratio','宽屏 16:9');setRadio('duration','90 秒');$('#copyFallback').hidden=true; }
-function setRadio(name,val){ const r=document.querySelector(`input[name="${name}"][value="${val}"]`); if(r) r.checked=true; }
-let tt; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2400); }
-async function copyCard(){
-  build();
-  if(build.need.length){ toast(tr('请补充：')+build.need.join(comma)+tr('。没有或记不清可如实填写。')); return; }
-  const t=build.text;
-  try{ await navigator.clipboard.writeText(t);toast(tr('已复制，把故事卡和原图通过微信发回制作方')); }
-  catch(e){ const el=$('#copyFallback');el.value=t;el.hidden=false;el.focus();el.select();el.setSelectionRange(0,t.length);toast(tr('请长按文字全选复制，电脑也可按 Ctrl / ⌘ + C')); }
-}
-document.addEventListener('input', e=>{if(e.target.id==='copyFallback')return;$('#copyFallback').hidden=true;build();save();});
-document.addEventListener('change', ()=>{build();save();});
-$('#btnCopy').addEventListener('click',copyCard);
-$('#btnClear').addEventListener('click',()=>{if(!confirm(tr('清空本机这份填写草稿？')))return;reset();try{localStorage.removeItem(KEY);}catch(e){}build();toast(tr('已清空'));});
+load();
+if(!themeKey){const q=new URL(location.href).searchParams.get('theme');if(q&&THEMES[q]){renderTheme(q);setRadio('theme',q);}}
 translateStatic();
-if(!load())reset();
 build();
 })();
 </script>
