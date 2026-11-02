@@ -173,17 +173,17 @@ const COMMON = {
   duration:[['90 秒（默认）','90 秒'],['180 秒','180 秒']],
   style:[['写实电影感','写实电影感'],['水彩绘本','水彩绘本'],['纸艺折纸','纸艺折纸'],['黏土定格','黏土定格'],['可爱 3D 动画','可爱 3D 动画']],
   styleMode:[['真人出镜，环境和画风是动画','真人出镜+动画环境'],['纯动画，主角也画成动画形象','纯动画'],['写实真人，不是动画','写实真人']],
-  adds:[['pet','宠物，名字','例：柯基「豆豆」'],['place','一个有意义的地方','例：学校后门的奶茶店'],['thing','一件有意义的物品','例：第一次约会的电影票'],['song','一首歌','例：他们大学时常听的那首'],['phrase','一句常说的话','例：走啦，回家']]
+  adds:[['pet','宠物，名字','例：柯基「豆豆」，会转圈圈欢迎你回家'],['place','一个有意义的地方','例：学校后门的奶茶店，第一杯都是在那儿喝的'],['thing','一件有意义的物品','例：第一次约会的电影票，一直夹在书里'],['song','一首歌','例：他们大学时常听的那首，一响就想起对方'],['phrase','一句常说的话','例：走啦，回家——最普通也最安心的一句'],['joke','一个只有你们懂的梗 / 暗号','例：说"老地方见"就都懂了']]
 };
 const PHOTO_COUPLE='请把两人清晰的正脸合照或各自单人照，通过微信等方式另发给制作方。早年的照片也可以补充。此处不上传照片。';
 const HINT_SELFIE='自拍是广角近距离，脸会比真人略宽，生成的画面会照着画。能再给一张别人拍的合照更好。';
 const OCC_SUB='决定结尾旁白怎么落、配乐快慢。';
 const SAY_SUB='想对 TA 说的一句话，会做结尾旁白。';
-const MEET_OPTS=['校园同学','同事','朋友介绍','网络认识','旅行或活动偶遇','青梅竹马'];
-const MEET_FILL={ask:'第一次见面在哪、什么季节、谁先注意到谁？',ph:'例：大二图书馆门口的林荫道，秋天，他先注意到她'};
-const MEET_EXTRA={ask:'那天有没有一个你到现在还记得的小东西（一本书、一杯饮料、一句话）？',ph:'例：她抱着两本书'};
-const CLOSE_OPTS=['雨天共伞','一起自习或加班','一起吃饭','深夜打电话','一起旅行','生病照顾','一起做饭'];
-const CLOSE_FILL={ask:'对方做过的一件让你心动的小事。',ph:'例：下雨天他的伞永远偏向她，自己右肩总是湿的'};
+const MEET_OPTS=['校园同学','同事','朋友介绍','网络认识','旅行或活动偶遇','青梅竹马','邻居','共同的爱好圈子'];
+const MEET_FILL={ask:'第一次见面在哪、什么季节、谁先注意到谁？慢慢想，那个画面会自己浮上来。',ph:'例：大二图书馆门口的林荫道，秋天，他隔着人群先看见了她'};
+const MEET_EXTRA={ask:'那天有没有一个你到现在还记得的小东西（一本书、一杯饮料、一句话）？它是故事的第一个信物。',ph:'例：她抱着两本书，其中一本到现在还放在他书架最上面'};
+const CLOSE_OPTS=['雨天共伞','一起自习或加班','一起吃饭','深夜打电话','一起旅行','生病照顾','一起做饭','一起养宠物','一句只有你们懂的玩笑'];
+const CLOSE_FILL={ask:'对方做过的一件让你心动的小事，那种"就是 TA 了"的瞬间。',ph:'例：下雨天他的伞永远偏向她，自己右肩总是湿的'};
 const WHO_COUPLE={ask:'两人在视频里怎么称呼',a:'我',b:'TA',aph:'例：阿远',bph:'例：小雨'};
 
 /* ============ 数据：12 个题材 ============ */
@@ -197,9 +197,9 @@ wedding:{
   acts:[
     {n:'第一幕',name:'相识',ask:'你们是怎么认识的',opts:MEET_OPTS,fill:MEET_FILL,extra:MEET_EXTRA},
     {n:'第二幕',name:'相知',ask:'是怎么慢慢走近的',opts:CLOSE_OPTS,fill:CLOSE_FILL},
-    {n:'第三幕',name:'确认',ask:'怎么在一起的，表白或求婚',opts:['毕业时决定一起走','表白','求婚','异地重逢','决定同行（搬家、换城市）'],fill:{ask:'在哪、谁开的口、说了什么？',ph:'例：毕业那天教学楼前，他说以后的路一起走'}},
-    {n:'第四幕',name:'相伴',ask:'一起生活的日子',opts:['家中翻相册','布置第一个家','养宠物','一起做饭','异地坚持','共同事业','一起熬过一件难事'],fill:{ask:'日常里最"你们"的一个画面。',ph:'例：周末傍晚窝在沙发翻老照片，笑到茶都凉了'}},
-    {n:'第五幕',name:'承诺',ask:'婚礼当天，片子怎么收尾',venue:{ask:'婚礼在哪办',opts:['户外草坪或花园','室内宴会厅','中式庭院','教堂','海边','旅行婚礼']},opts:['牵手走远','回眸相笑','拥抱','交换戒指（只拍手，最稳）'],fill:{ask:SAY_SUB,ph:'例：这次，我就在你身边'}}
+    {n:'第三幕',name:'确认',ask:'怎么在一起的，表白或求婚',opts:['毕业时决定一起走','表白','求婚','异地重逢','决定同行（搬家、换城市）','先做了很久朋友，顺其自然在一起','一方默默喜欢了很多年'],fill:{ask:'在哪、谁开的口、说了什么？那一刻的天气或气味，还记得吗？',ph:'例：毕业那天教学楼前，他说以后的路一起走，太阳正好'}},
+    {n:'第四幕',name:'相伴',ask:'一起生活的日子',opts:['家中翻相册','布置第一个家','养宠物','一起做饭','异地坚持','共同事业','一起熬过一件难事','一起追一部剧追到结局','每年生日雷打不动的惊喜'],fill:{ask:'日常里最"你们"的一个画面，一个能反复回看的瞬间。',ph:'例：周末傍晚窝在沙发翻老照片，笑到茶都凉了'}},
+    {n:'第五幕',name:'承诺',ask:'婚礼当天，片子怎么收尾',venue:{ask:'婚礼在哪办',opts:['户外草坪或花园','室内宴会厅','中式庭院','教堂','海边','旅行婚礼','山顶','老房子 / 故居']},opts:['牵手走远','回眸相笑','拥抱','交换戒指（只拍手，最稳）','额头相抵','并肩看向台下的亲人'],fill:{ask:SAY_SUB,ph:'例：这次，我就在你身边，以后也是'}}
   ]},
 proposal:{
   t:'求婚',title:'求婚故事采集卡',
@@ -208,9 +208,9 @@ proposal:{
   acts:[
     {n:'第一幕',name:'相识',ask:'你们是怎么认识的',opts:MEET_OPTS,fill:MEET_FILL,extra:MEET_EXTRA},
     {n:'第二幕',name:'相知',ask:'是怎么慢慢走近的',opts:CLOSE_OPTS,fill:CLOSE_FILL},
-    {n:'第三幕',name:'认定',ask:'怎么确定就是 TA',opts:['一次深夜长谈','一起熬过难关','见过彼此最狼狈的样子','说不上来，就是确定'],fill:{ask:'哪个瞬间让你确定要向 TA 求婚？',ph:'例：她照顾生病的我一周，我就想是这个人了'}},
-    {n:'第四幕',name:'筹划',ask:'求婚是怎么准备的',opts:['准备戒指','布置场地','朋友助攻','瞒着 TA 保密'],fill:{ask:'筹划中最用心或最惊险的一个细节。',ph:'例：戒指藏在蛋糕里，差点被她先吃到'}},
-    {n:'第五幕',name:'那一刻',ask:'求婚那一刻',venue:{ask:'求婚在哪里（或打算在哪里）',opts:['户外','餐厅','家里','旅行中','第一次约会的地方']},opts:['单膝跪地','拿出戒指','说出那句话','TA 哭了'],fill:{ask:SAY_SUB,ph:'例：往后的路，换我牵着你走'}}
+    {n:'第三幕',name:'认定',ask:'怎么确定就是 TA',opts:['一次深夜长谈','一起熬过难关','见过彼此最狼狈的样子','说不上来，就是确定','TA 把你随口一提的事记了好久','和 TA 在一起，你可以安心做自己'],fill:{ask:'哪个瞬间让你确定要向 TA 求婚？',ph:'例：她照顾生病的我一周，我就想是这个人了'}},
+    {n:'第四幕',name:'筹划',ask:'求婚是怎么准备的',opts:['准备戒指','布置场地','朋友助攻','瞒着 TA 保密','练习了好几遍要说的话','请 TA 最重视的人到场见证'],fill:{ask:'筹划中最用心或最惊险的一个细节，后来 TA 知道了吗。',ph:'例：戒指藏在蛋糕里，差点被她先吃到'}},
+    {n:'第五幕',name:'那一刻',ask:'求婚那一刻',venue:{ask:'求婚在哪里（或打算在哪里）',opts:['户外','餐厅','家里','旅行中','第一次约会的地方','一间有特殊意义的餐厅','两人常去的江边 / 海边']},opts:['单膝跪地','拿出戒指','说出那句话','TA 哭了','两个人哭成一团','TA 说"我愿意"'],fill:{ask:SAY_SUB,ph:'例：往后的路，换我牵着你走'}}
   ]},
 anniversary:{
   t:'纪念日 / 周年',title:'纪念日故事采集卡',
@@ -219,9 +219,9 @@ anniversary:{
   acts:[
     {n:'第一幕',name:'初见',ask:'你们是怎么认识的',opts:MEET_OPTS,fill:MEET_FILL,extra:MEET_EXTRA},
     {n:'第二幕',name:'同行',ask:'是怎么慢慢走近的',opts:CLOSE_OPTS,fill:CLOSE_FILL},
-    {n:'第三幕',name:'转折',ask:'一起迈过的坎',opts:['异地','经济压力','家人反对','事业变动'],fill:{ask:'那段日子怎么过来的，谁做了什么？',ph:'例：异地两年，他每月坐五个小时火车来看我'}},
-    {n:'第四幕',name:'坚守',ask:'这些年最"我们"的习惯',opts:['每天说晚安','周末一起做饭','每年一次旅行','睡前聊天'],fill:{ask:'一个坚持到现在的习惯或小仪式。',ph:'例：再忙周日早上也一起吃顿早午餐'}},
-    {n:'第五幕',name:'约定',ask:'下一个约定',opts:['一次远行','一个新家','一件想一起完成的事'],fill:{ask:SAY_SUB,ph:'例：下一个十年，还请多指教'}}
+    {n:'第三幕',name:'转折',ask:'一起迈过的坎',opts:['异地','经济压力','家人反对','事业变动','养育孩子','照顾生病的家人','一起扛过买房搬家的累'],fill:{ask:'那段日子怎么过来的，谁做了什么？回头再看，最想感谢对方的是什么。',ph:'例：异地两年，他每月坐五个小时火车来看我'}},
+    {n:'第四幕',name:'坚守',ask:'这些年最"我们"的习惯',opts:['每天说晚安','周末一起做饭','每年一次旅行','睡前聊天','记得彼此的忌口和小习惯','吵架后总有一个人先低头'],fill:{ask:'一个坚持到现在的习惯或小仪式。',ph:'例：再忙周日早上也一起吃顿早午餐'},extra:{ask:'有没有一个只属于你们俩的小暗号、小称呼或小仪式？',ph:'例：我管他叫"队长"，他管我叫"小朋友"'}},
+    {n:'第五幕',name:'约定',ask:'下一个约定',opts:['一次远行','一个新家','一件想一起完成的事','一起变老','把这辈子慢慢过完'],fill:{ask:SAY_SUB,ph:'例：下一个十年，还请多指教'}}
   ]},
 birthday:{
   t:'生日 / 寿辰',title:'生日故事采集卡',
@@ -230,11 +230,11 @@ birthday:{
   photoHint:'老照片翻拍也可以，尽量清晰、正脸。',
   occ:{ask:'在哪个环节播放',sub:OCC_SUB,opts:['生日宴现场','聚会开场','私下赠送']},
   acts:[
-    {n:'第一幕',name:'小时候',ask:'记忆里的 TA',opts:['调皮捣蛋','懂事得早','爱读书','闲不住'],fill:{ask:'一个小时候的画面，越具体越好。',ph:'例：她小时候总蹲在门口等爸爸下班'}},
-    {n:'第二幕',name:'长大',ask:'TA 的年轻时代',opts:['求学','工作打拼','成家','闯荡远方'],fill:{ask:'TA 年轻时的一件标志性的事。',ph:'例：他二十出头一个人去了深圳'}},
-    {n:'第三幕',name:'高光',ask:'TA 最让人佩服的一件事',opts:['撑起一个家','事业有成','帮助他人','坚持一门手艺'],fill:{ask:'具体是什么事，你为什么佩服。',ph:'例：妈妈一个人把我和哥哥拉扯大'}},
-    {n:'第四幕',name:'不易',ask:'TA 不容易的一段日子',opts:['生病的日子','为家操劳','工作低谷','默默付出'],fill:{ask:'那段日子 TA 是怎么扛过来的。',ph:'例：那几年她白天上班晚上摆摊'}},
-    {n:'第五幕',name:'祝福',ask:'此刻的祝福',opts:['健康长寿','天天开心','慢下来享福','继续做自己'],fill:{ask:'想对 TA 说的一句话，会做结尾旁白。',ph:'例：爸，以后换我照顾你'}}
+    {n:'第一幕',name:'小时候',ask:'记忆里的 TA',opts:['调皮捣蛋','懂事得早','爱读书','闲不住','特别疼我','总把好吃的留给我'],fill:{ask:'一个小时候的画面，越具体越好。想起来的时候，心里是暖的。',ph:'例：她小时候总蹲在门口等爸爸下班'}},
+    {n:'第二幕',name:'长大',ask:'TA 的年轻时代',opts:['求学','工作打拼','成家','闯荡远方','第一次送我上学','学会一项养活全家的本事'],fill:{ask:'TA 年轻时的一件标志性的事。',ph:'例：他二十出头一个人去了深圳'}},
+    {n:'第三幕',name:'高光',ask:'TA 最让人佩服的一件事',opts:['撑起一个家','事业有成','帮助他人','坚持一门手艺','对别人也很慷慨','再难也没有倒下过'],fill:{ask:'具体是什么事，你为什么佩服。',ph:'例：妈妈一个人把我和哥哥拉扯大'},extra:{ask:'有没有一件 TA 引以为傲、常挂在嘴边的小事？',ph:'例：他总说自己当年百米能跑进十二秒'}},
+    {n:'第四幕',name:'不易',ask:'TA 不容易的一段日子',opts:['生病的日子','为家操劳','工作低谷','默默付出','把苦都咽在自己肚子里','为子女牺牲了自己的梦想'],fill:{ask:'那段日子 TA 是怎么扛过来的，你后来才知道的辛苦是什么。',ph:'例：那几年她白天上班晚上摆摊'}},
+    {n:'第五幕',name:'祝福',ask:'此刻的祝福',opts:['健康长寿','天天开心','慢下来享福','继续做自己','谢谢你','你辛苦了'],fill:{ask:'想对 TA 说的一句话，会做结尾旁白。',ph:'例：爸，以后换我照顾你'}}
   ]},
 baby:{
   t:'周岁宴',title:'宝宝周岁故事采集卡',
@@ -243,11 +243,11 @@ baby:{
   photoHint:'正脸、光线好的照片效果最好；出生时的照片也建议提供。',
   occ:{ask:'在哪个环节播放',sub:OCC_SUB,opts:['周岁宴现场','抓周环节','亲友群分享']},
   acts:[
-    {n:'第一幕',name:'期待',ask:'TA 到来之前',opts:['准备小衣服','起名字','想象 TA 的样子','孕期的辛苦与甜蜜'],fill:{ask:'等待 TA 时印象最深的一件事。',ph:'例：爸爸第一次听到胎心，激动得一晚没睡'}},
-    {n:'第二幕',name:'初见',ask:'出生那天',opts:['产房外的等待','第一声哭','第一次抱 TA','小小的手和脚'],fill:{ask:'出生那天的画面。',ph:'例：凌晨三点，护士把她抱出来，皱皱巴巴像个小老头'}},
-    {n:'第三幕',name:'第一次',ask:'TA 的第一次',opts:['第一次笑','第一次翻身','第一次爬','第一次叫爸妈'],fill:{ask:'最难忘的一个"第一次"。',ph:'例：八个月那天突然冲我喊了一声"妈"'}},
-    {n:'第四幕',name:'日常',ask:'最治愈的日常',opts:['睡着的样子','吃饭满脸','洗澡玩水','出门遛弯'],fill:{ask:'一个百看不厌的日常画面。',ph:'例：她抱着奶瓶喝到睡着，嘴角还挂着奶'}},
-    {n:'第五幕',name:'祝福',ask:'想对一岁的 TA 说',opts:['健康长大','慢慢长大','勇敢去探索','永远被爱'],fill:{ask:'想对宝宝说的一句话，会做结尾旁白。',ph:'例：豆豆，这个世界很大，爸爸妈妈陪你慢慢看'}}
+    {n:'第一幕',name:'期待',ask:'TA 到来之前',opts:['准备小衣服','起名字','想象 TA 的样子','孕期的辛苦与甜蜜','第一次胎动','和家人视频分享好消息','一点点布置婴儿房'],fill:{ask:'等待 TA 时印象最深的一件事。',ph:'例：爸爸第一次听到胎心，激动得一晚没睡'}},
+    {n:'第二幕',name:'初见',ask:'出生那天',opts:['产房外的等待','第一声哭','第一次抱 TA','小小的手和脚','看你第一眼就想哭','第一次和你对视'],fill:{ask:'出生那天的画面。现在想起来，还像昨天一样清晰。',ph:'例：凌晨三点，护士把她抱出来，皱皱巴巴像个小老头'}},
+    {n:'第三幕',name:'第一次',ask:'TA 的第一次',opts:['第一次笑','第一次翻身','第一次爬','第一次叫爸妈','第一次睡整觉','第一次坐起来','第一颗小牙'],fill:{ask:'最难忘的一个"第一次"。',ph:'例：八个月那天突然冲我喊了一声"妈"'},extra:{ask:'第一次发生的那天，还有谁在场，大家什么反应？',ph:'例：全家都凑过来看，外婆笑得直抹眼泪'}},
+    {n:'第四幕',name:'日常',ask:'最治愈的日常',opts:['睡着的样子','吃饭满脸','洗澡玩水','出门遛弯','第一次站起来的瞬间','奶声奶气地哼唧'],fill:{ask:'一个百看不厌的日常画面。',ph:'例：她抱着奶瓶喝到睡着，嘴角还挂着奶'}},
+    {n:'第五幕',name:'祝福',ask:'想对一岁的 TA 说',opts:['健康长大','慢慢长大','勇敢去探索','永远被爱','做最喜欢的自己','慢一点也没关系'],fill:{ask:'想对宝宝说的一句话，会做结尾旁白。',ph:'例：豆豆，这个世界很大，爸爸妈妈陪你慢慢看'}}
   ]},
 graduation:{
   t:'毕业',title:'毕业故事采集卡',
@@ -256,11 +256,11 @@ graduation:{
   photoHint:'集体照请标注哪一位是主角。',
   occ:{ask:'在哪个环节播放',sub:OCC_SUB,opts:['毕业典礼','散伙饭','班级群分享']},
   acts:[
-    {n:'第一幕',name:'入学',ask:'第一天',opts:['拖着行李报到','第一次进教室','初见室友','军训'],fill:{ask:'入学第一天印象最深的事。',ph:'例：九月太阳很大，爸爸送我到宿舍楼下就走了'}},
-    {n:'第二幕',name:'同伴',ask:'一起混的人',opts:['室友','同桌','社团伙伴','球队队友'],fill:{ask:'和 TA 们最常做的一件事。',ph:'例：宿舍四人每晚熄灯后开"卧谈会"'}},
-    {n:'第三幕',name:'挑战',ask:'最难的一段',opts:['考试周','一场比赛','一个项目','一段迷茫'],fill:{ask:'最难的时候是什么样，怎么扛过来的。',ph:'例：考研那年冬天，图书馆闭馆后去食堂背书'}},
-    {n:'第四幕',name:'高光',ask:'最骄傲的一刻',opts:['拿奖','上岸','演出成功','被认可'],fill:{ask:'那一刻的画面。',ph:'例：名单念到我名字时，全宿舍喊得比我还大声'}},
-    {n:'第五幕',name:'启程',ask:'想说的话',opts:['谢谢同伴','谢谢老师','给未来的自己','约定再聚'],fill:{ask:'想说的一句话，会做结尾旁白。',ph:'例：山水一程，三生有幸'}}
+    {n:'第一幕',name:'入学',ask:'第一天',opts:['拖着行李报到','第一次进教室','初见室友','军训','爸妈的叮嘱','第一次离开家过夜'],fill:{ask:'入学第一天印象最深的事。',ph:'例：九月太阳很大，爸爸送我到宿舍楼下就走了'},extra:{ask:'开学前，家人送了你一句什么话，或帮你张罗了什么？',ph:'例：妈妈往行李箱塞了一包家乡的辣酱'}},
+    {n:'第二幕',name:'同伴',ask:'一起混的人',opts:['室友','同桌','社团伙伴','球队队友','同学 / 队友','一起点过的外卖'],fill:{ask:'和 TA 们最常做的一件事。',ph:'例：宿舍四人每晚熄灯后开"卧谈会"'}},
+    {n:'第三幕',name:'挑战',ask:'最难的一段',opts:['考试周','一场比赛','一个项目','一段迷茫','第一次挂科或失利','一个人扛下来的时刻'],fill:{ask:'最难的时候是什么样，怎么扛过来的。',ph:'例：考研那年冬天，图书馆闭馆后去食堂背书'}},
+    {n:'第四幕',name:'高光',ask:'最骄傲的一刻',opts:['拿奖','上岸','演出成功','被认可','考上心仪的学校','论文答辩通过'],fill:{ask:'那一刻的画面。',ph:'例：名单念到我名字时，全宿舍喊得比我还大声'}},
+    {n:'第五幕',name:'启程',ask:'想说的话',opts:['谢谢同伴','谢谢老师','给未来的自己','约定再聚','谢谢这几年的自己','后会有期'],fill:{ask:'想说的一句话，会做结尾旁白。',ph:'例：山水一程，三生有幸'}}
   ]},
 growth:{
   t:'成长记录',title:'成长故事采集卡',
@@ -269,11 +269,11 @@ growth:{
   photoHint:'老照片翻拍也可以，尽量清晰、正脸。',
   occ:{ask:'片子什么时候看',sub:OCC_SUB,opts:['成年礼','生日','家庭聚会']},
   acts:[
-    {n:'第一幕',name:'起点',ask:'最早的记忆画面',opts:['学走路','第一次上学','搬过的家','小时候的模样'],fill:{ask:'最早的、或最常想起的一个画面。',ph:'例：骑着小自行车在院子里转圈，怎么也学不会'}},
-    {n:'第二幕',name:'痴迷',ask:'曾经痴迷的事',opts:['画画','运动','游戏','一个偶像'],fill:{ask:'痴迷到什么程度，有什么证据。',ph:'例：整面墙贴满她画的画，作业本背面也是'}},
-    {n:'第三幕',name:'跌倒',ask:'一次跌倒',opts:['考试失利','比赛输了','和朋友闹掰','一次生病'],fill:{ask:'那次跌倒是什么样，怎么爬起来的。',ph:'例：比赛输了哭了一路，第二天照常去训练'}},
-    {n:'第四幕',name:'蜕变',ask:'忽然长大的瞬间',opts:['独自出远门','一次担当','理解父母','找到方向'],fill:{ask:'哪个瞬间觉得 TA 忽然长大了。',ph:'例：第一次自己坐高铁，到站给我发"放心"'}},
-    {n:'第五幕',name:'远方',ask:'想对未来的自己说',opts:['保持热爱','别怕失败','慢慢走','常回家'],fill:{ask:'想说的一句话，会做结尾旁白。',ph:'例：愿你眼里的光一直在'}}
+    {n:'第一幕',name:'起点',ask:'最早的记忆画面',opts:['学走路','第一次上学','搬过的家','小时候的模样','老照片里的模样','第一声"妈妈 / 爸爸"'],fill:{ask:'最早的、或最常想起的一个画面。',ph:'例：骑着小自行车在院子里转圈，怎么也学不会'}},
+    {n:'第二幕',name:'痴迷',ask:'曾经痴迷的事',opts:['画画','运动','游戏','一个偶像','收集某样东西','攒钱买一件心爱之物'],fill:{ask:'痴迷到什么程度，有什么证据。',ph:'例：整面墙贴满她画的画，作业本背面也是'}},
+    {n:'第三幕',name:'跌倒',ask:'一次跌倒',opts:['考试失利','比赛输了','和朋友闹掰','一次生病','被否定的一次','第一次独自面对失败'],fill:{ask:'那次跌倒是什么样，怎么爬起来的。',ph:'例：比赛输了哭了一路，第二天照常去训练'}},
+    {n:'第四幕',name:'蜕变',ask:'忽然长大的瞬间',opts:['独自出远门','一次担当','理解父母','找到方向','开始主动分担家务','懂得心疼父母'],fill:{ask:'哪个瞬间觉得 TA 忽然长大了。',ph:'例：第一次自己坐高铁，到站给我发"放心"'},extra:{ask:'那次长大之后，TA 做了哪件让你特别安心的事？',ph:'例：开始每周给外婆打电话，报平安'}},
+    {n:'第五幕',name:'远方',ask:'想对未来的自己说',opts:['保持热爱','别怕失败','慢慢走','常回家','做自己就好了','累了就回家'],fill:{ask:'想说的一句话，会做结尾旁白。',ph:'例：愿你眼里的光一直在'}}
   ]},
 travel:{
   t:'旅行',title:'旅行故事采集卡',
@@ -282,11 +282,11 @@ travel:{
   photoHint:'人物正脸照和标志性风景照都建议提供。',
   occ:{ask:'片子什么时候看',sub:OCC_SUB,opts:['旅行归来分享','纪念日','社交平台']},
   acts:[
-    {n:'第一幕',name:'出发',ask:'为什么去那里',opts:['种草已久','临时起意','庆祝某件事','完成一个心愿'],fill:{ask:'出发前的心情或准备中的一件事。',ph:'例：她做了二十页攻略，结果第一天就全打乱了'}},
-    {n:'第二幕',name:'路上',ask:'路上的画面',opts:['车窗风景','赶车赶飞机','边走边吃','导航带错路'],fill:{ask:'路上印象最深的一个画面。',ph:'例：火车过隧道时，窗玻璃上全是我们的影子'}},
-    {n:'第三幕',name:'意外',ask:'计划外的事',opts:['迷路','坏天气','错过车次','意外惊喜'],fill:{ask:'那件计划外的事，后来怎么成了故事。',ph:'例：暴雨困在小镇，却吃到最难忘的一碗面'}},
-    {n:'第四幕',name:'高光',ask:'最值得的一刻',opts:['日出日落','一顿美食','一个当地人','终于到达'],fill:{ask:'那一刻的画面。',ph:'例：凌晨五点爬到山顶，云一下子全散了'}},
-    {n:'第五幕',name:'回家',ask:'回来之后',opts:['想念那口味道','照片翻了很多遍','计划下一趟','更珍惜身边人'],fill:{ask:'回来后最常想起的是什么。',ph:'例：回来后一个月的壁纸都是那片海'}}
+    {n:'第一幕',name:'出发',ask:'为什么去那里',opts:['种草已久','临时起意','庆祝某件事','完成一个心愿','带爸妈 / 家人一起去','说走就走的冲动'],fill:{ask:'出发前的心情或准备中的一件事。',ph:'例：她做了二十页攻略，结果第一天就全打乱了'}},
+    {n:'第二幕',name:'路上',ask:'路上的画面',opts:['车窗风景','赶车赶飞机','边走边吃','导航带错路','在车上睡成一团','一路的聊天和音乐'],fill:{ask:'路上印象最深的一个画面。',ph:'例：火车过隧道时，窗玻璃上全是我们的影子'},extra:{ask:'旅途里有没有一段总被你们提起的笑话或口头禅？',ph:'例：一到岔路口就齐声喊"跟着导航走"'}},
+    {n:'第三幕',name:'意外',ask:'计划外的事',opts:['迷路','坏天气','错过车次','意外惊喜','语言不通的窘况','临时改道的新风景'],fill:{ask:'那件计划外的事，后来怎么成了故事。',ph:'例：暴雨困在小镇，却吃到最难忘的一碗面'}},
+    {n:'第四幕',name:'高光',ask:'最值得的一刻',opts:['日出日落','一顿美食','一个当地人','终于到达','和陌生人的一次相遇','一个舍不得离开的地方'],fill:{ask:'那一刻的画面。',ph:'例：凌晨五点爬到山顶，云一下子全散了'}},
+    {n:'第五幕',name:'回家',ask:'回来之后',opts:['想念那口味道','照片翻了很多遍','计划下一趟','更珍惜身边人','把回忆写成了文字','下一次还要带谁来'],fill:{ask:'回来后最常想起的是什么。',ph:'例：回来后一个月的壁纸都是那片海'}}
   ]},
 pet:{
   t:'宠物',title:'宠物故事采集卡',
@@ -295,11 +295,11 @@ pet:{
   photoHint:'正脸、眼睛清楚的照片效果最好。',
   occ:{ask:'片子什么时候看',sub:OCC_SUB,opts:['相遇纪念日','TA 的生日','告别纪念','日常分享']},
   acts:[
-    {n:'第一幕',name:'相遇',ask:'TA 怎么来到你家',opts:['领养','购买','捡到的','朋友送的'],fill:{ask:'第一次见到 TA 的样子。',ph:'例：雨天的纸箱里，它抖成一团'}},
-    {n:'第二幕',name:'日常',ask:'最日常的画面',opts:['等你回家','干饭积极','睡觉四仰八叉','特别黏人'],fill:{ask:'一个每天上演却百看不厌的画面。',ph:'例：每天六点准时蹲在门口等我下班'}},
-    {n:'第三幕',name:'趣事',ask:'TA 干过的"坏事"',opts:['拆家','偷吃','演戏装可怜','和别的动物吵架'],fill:{ask:'最哭笑不得的一件事。',ph:'例：咬坏了三双拖鞋，只咬左脚'}},
-    {n:'第四幕',name:'守护',ask:'TA 陪你度过的日子',opts:['陪你熬夜','你难过时 TA 在','生病时的陪伴','一起搬家'],fill:{ask:'TA 陪你度过的一段日子。',ph:'例：失恋那周，它一直把头搁在我腿上'}},
-    {n:'第五幕',name:'告白',ask:'想对 TA 说',opts:['谢谢你来过','要健康长久','对不起陪你的时间少','你是家人'],fill:{ask:SAY_SUB,ph:'例：豆豆，谢谢你选了我们'}}
+    {n:'第一幕',name:'相遇',ask:'TA 怎么来到你家',opts:['领养','购买','捡到的','朋友送的','一眼相中的缘分','自己跑来的流浪小可怜'],fill:{ask:'第一次见到 TA 的样子。',ph:'例：雨天的纸箱里，它抖成一团'}},
+    {n:'第二幕',name:'日常',ask:'最日常的画面',opts:['等你回家','干饭积极','睡觉四仰八叉','特别黏人','早上准时来舔醒你','总爱跟着你转'],fill:{ask:'一个每天上演却百看不厌的画面。',ph:'例：每天六点准时蹲在门口等我下班'}},
+    {n:'第三幕',name:'趣事',ask:'TA 干过的"坏事"',opts:['拆家','偷吃','演戏装可怜','和别的动物吵架','把心爱的东西藏起来','装无辜的演技'],fill:{ask:'最哭笑不得的一件事。',ph:'例：咬坏了三双拖鞋，只咬左脚'},extra:{ask:'TA 有没有一个让你又好气又好笑的小习惯？',ph:'例：每次犯错就翻肚皮卖萌，让人下不去手'}},
+    {n:'第四幕',name:'守护',ask:'TA 陪你度过的日子',opts:['陪你熬夜','你难过时 TA 在','生病时的陪伴','一起搬家','接你下班 / 回家','生病时寸步不离'],fill:{ask:'TA 陪你度过的一段日子。',ph:'例：失恋那周，它一直把头搁在我腿上'}},
+    {n:'第五幕',name:'告白',ask:'想对 TA 说',opts:['谢谢你来过','要健康长久','对不起陪你的时间少','你是家人','下辈子还做一家人','谢谢你陪我的每一天'],fill:{ask:SAY_SUB,ph:'例：豆豆，谢谢你选了我们'}}
   ]},
 family:{
   t:'家人 / 亲情',title:'家人故事采集卡',
@@ -308,11 +308,11 @@ family:{
   photoHint:'老照片翻拍也可以，尽量清晰、正脸。',
   occ:{ask:'片子什么时候看',sub:OCC_SUB,opts:['TA 的生日','节日','家庭聚会','平常的一天']},
   acts:[
-    {n:'第一幕',name:'小时候',ask:'记忆里的 TA',opts:['做饭的背影','接送上下学','灯下缝补','严厉的样子'],fill:{ask:'小时候记忆里最清楚的 TA。',ph:'例：每天放学，校门口总有他的自行车'}},
-    {n:'第二幕',name:'一个画面',ask:'关于 TA 最清晰的画面',opts:['一双手','一个习惯动作','常坐的位置','常说的一句话'],fill:{ask:'那个画面是什么样。',ph:'例：妈妈的手总是裂着口子，冬天贴满胶布'}},
-    {n:'第三幕',name:'长大后才懂',ask:'当时不懂的事',opts:['TA 的节省','TA 的严厉','TA 的沉默','TA 的等待'],fill:{ask:'哪件事是长大后才懂的。',ph:'例：他不是不爱说话，是累得不想说话'}},
-    {n:'第四幕',name:'现在的 TA',ask:'TA 现在的样子',opts:['头发白了','学会视频通话','在带孙辈','有了新的爱好'],fill:{ask:'现在的 TA 是什么样。',ph:'例：她学会了发语音，一条六十秒，全是叮嘱'}},
-    {n:'第五幕',name:'想说',ask:'想对 TA 说',opts:['谢谢','对不起','我爱你','换我来照顾你'],fill:{ask:SAY_SUB,ph:'例：妈，这次换我牵你的手'}}
+    {n:'第一幕',name:'小时候',ask:'记忆里的 TA',opts:['做饭的背影','接送上下学','灯下缝补','严厉的样子','总把最好的给我','生病时整夜守着'],fill:{ask:'小时候记忆里最清楚的 TA。',ph:'例：每天放学，校门口总有他的自行车'}},
+    {n:'第二幕',name:'一个画面',ask:'关于 TA 最清晰的画面',opts:['一双手','一个习惯动作','常坐的位置','常说的一句话','一个特有的味道','一条走了无数遍的路'],fill:{ask:'那个画面是什么样。闭上眼睛，最先出现的是什么。',ph:'例：妈妈的手总是裂着口子，冬天贴满胶布'}},
+    {n:'第三幕',name:'长大后才懂',ask:'当时不懂的事',opts:['TA 的节省','TA 的严厉','TA 的沉默','TA 的等待','TA 的唠叨','TA 偷偷藏起的心事'],fill:{ask:'哪件事是长大后才懂的。',ph:'例：他不是不爱说话，是累得不想说话'}},
+    {n:'第四幕',name:'现在的 TA',ask:'TA 现在的样子',opts:['头发白了','学会视频通话','在带孙辈','有了新的爱好','腿脚不如从前了','越来越像小孩子'],fill:{ask:'现在的 TA 是什么样。',ph:'例：她学会了发语音，一条六十秒，全是叮嘱'},extra:{ask:'现在的 TA 最常做、最让你记挂的一件小事。',ph:'例：每次挂电话前都要补一句"记得吃饭"'}},
+    {n:'第五幕',name:'想说',ask:'想对 TA 说',opts:['谢谢','对不起','我爱你','换我来照顾你','别太累了','以后我多陪陪你'],fill:{ask:SAY_SUB,ph:'例：妈，这次换我牵你的手'}}
   ]},
 career:{
   t:'工作 / 事业',title:'事业故事采集卡',
@@ -321,11 +321,11 @@ career:{
   photoHint:'早期照片与现在的对比照效果最好。',
   occ:{ask:'片子什么时候用',sub:OCC_SUB,opts:['年会','周年庆','离职纪念','项目庆功']},
   acts:[
-    {n:'第一幕',name:'入行',ask:'为什么选这行',opts:['热爱','误打误撞','家庭影响','一个契机'],fill:{ask:'入行那年的状态。',ph:'例：刚毕业，全部家当一个行李箱'}},
-    {n:'第二幕',name:'碰壁',ask:'最难的时刻',opts:['没单子','被否定','资金断裂','团队散了'],fill:{ask:'最难的一次是什么样。',ph:'例：连续三个月没开张，房租都交不起'}},
-    {n:'第三幕',name:'转折',ask:'怎么挺过来的',opts:['贵人相助','死磕到底','换了个方向','团队没散'],fill:{ask:'转折是怎么发生的。',ph:'例：一个老客户介绍了整层写字楼的单子'}},
-    {n:'第四幕',name:'高光',ask:'最有成就感的事',opts:['第一单','一次认可','做成大项目','带出了人'],fill:{ask:'那一刻的画面。',ph:'例：徒弟独立签下第一单，比我自己签还激动'}},
-    {n:'第五幕',name:'下一站',ask:'想对同行人说',opts:['感谢团队','继续死磕','不忘初心','下一个目标'],fill:{ask:'想说的一句话，会做结尾旁白。',ph:'例：路还长，咱们慢慢走'}}
+    {n:'第一幕',name:'入行',ask:'为什么选这行',opts:['热爱','误打误撞','家庭影响','一个契机','想靠手艺养活自己','看到别人做好，也想试试'],fill:{ask:'入行那年的状态。',ph:'例：刚毕业，全部家当一个行李箱'}},
+    {n:'第二幕',name:'碰壁',ask:'最难的时刻',opts:['没单子','被否定','资金断裂','团队散了','身体撑不住了','怀疑自己选错了'],fill:{ask:'最难的一次是什么样。当时是怎么给自己打气的。',ph:'例：连续三个月没开张，房租都交不起'}},
+    {n:'第三幕',name:'转折',ask:'怎么挺过来的',opts:['贵人相助','死磕到底','换了个方向','团队没散','靠口碑慢慢熬出来','家人的支持'],fill:{ask:'转折是怎么发生的。',ph:'例：一个老客户介绍了整层写字楼的单子'}},
+    {n:'第四幕',name:'高光',ask:'最有成就感的事',opts:['第一单','一次认可','做成大项目','带出了人','客户的一句谢谢','团队一起扛过难关'],fill:{ask:'那一刻的画面。',ph:'例：徒弟独立签下第一单，比我自己签还激动'},extra:{ask:'有没有一个让你觉得"值了"的瞬间？',ph:'例：深夜收工，看到门店灯牌还亮着，心里很踏实'}},
+    {n:'第五幕',name:'下一站',ask:'想对同行人说',opts:['感谢团队','继续死磕','不忘初心','下一个目标','致一起拼过的人','把这份事业做下去'],fill:{ask:'想说的一句话，会做结尾旁白。',ph:'例：路还长，咱们慢慢走'}}
   ]},
 brand:{
   t:'品牌 / 产品',title:'品牌故事采集卡',
@@ -334,11 +334,11 @@ brand:{
   photoHint:'产品细节照和早期老照片都建议提供。',
   occ:{ask:'片子在哪里用',sub:OCC_SUB,opts:['发布会','官网 / 详情页','招商加盟','周年庆']},
   acts:[
-    {n:'第一幕',name:'起点',ask:'为什么做这个品牌',opts:['自己的痛点','看不惯行业现状','一门手艺','一个理想'],fill:{ask:'起心动念的那一刻。',ph:'例：找不到一杯不加香精的茶，干脆自己做'}},
-    {n:'第二幕',name:'坚持',ask:'最难时没放弃的原因',opts:['用户鼓励','团队','信念','没有退路'],fill:{ask:'最难的时候是什么样，靠什么撑住。',ph:'例：小店连续亏损，是一条用户留言让我们撑下去'}},
-    {n:'第三幕',name:'转折',ask:'关键转折',opts:['第一个爆款','一次曝光','调整定位','熬过淡季'],fill:{ask:'转折是怎么发生的。',ph:'例：一条素人视频突然带火了我们'}},
-    {n:'第四幕',name:'成果',ask:'被认可的证据',opts:['复购和口碑','媒体报道','行业奖项','用户来信'],fill:{ask:'最让你们自豪的一个认可。',ph:'例：有用户把我们的包装攒了一整面墙'}},
-    {n:'第五幕',name:'愿景',ask:'想对用户说',opts:['谢谢陪伴','坚持初心','新品预告','一个承诺'],fill:{ask:'想对用户说的一句话，会做结尾旁白。',ph:'例：谢谢你们的挑剔，让我们不敢偷懒'}}
+    {n:'第一幕',name:'起点',ask:'为什么做这个品牌',opts:['自己的痛点','看不惯行业现状','一门手艺','一个理想','想把一件事做到极致','想给行业一点不一样'],fill:{ask:'起心动念的那一刻。',ph:'例：找不到一杯不加香精的茶，干脆自己做'}},
+    {n:'第二幕',name:'坚持',ask:'最难时没放弃的原因',opts:['用户鼓励','团队','信念','没有退路','第一批用户的信任','不甘心半途而废'],fill:{ask:'最难的时候是什么样，靠什么撑住。',ph:'例：小店连续亏损，是一条用户留言让我们撑下去'}},
+    {n:'第三幕',name:'转折',ask:'关键转折',opts:['第一个爆款','一次曝光','调整定位','熬过淡季','一次诚恳的道歉挽回口碑','把细节做到别人挑不出毛病'],fill:{ask:'转折是怎么发生的。',ph:'例：一条素人视频突然带火了我们'}},
+    {n:'第四幕',name:'成果',ask:'被认可的证据',opts:['复购和口碑','媒体报道','行业奖项','用户来信','用户把产品送进礼物里','被同行认可'],fill:{ask:'最让你们自豪的一个认可。',ph:'例：有用户把我们的包装攒了一整面墙'},extra:{ask:'有没有一条让你记了很久的用户留言或故事？',ph:'例：一位阿姨说，只有你们的东西她敢放心给孙子用'}},
+    {n:'第五幕',name:'愿景',ask:'想对用户说',opts:['谢谢陪伴','坚持初心','新品预告','一个承诺','始终对你诚实','陪你走更远'],fill:{ask:'想对用户说的一句话，会做结尾旁白。',ph:'例：谢谢你们的挑剔，让我们不敢偷懒'}}
   ]}
 };
 const THEME_KEYS=Object.keys(THEMES);
@@ -1055,7 +1055,169 @@ const EN = {
   "一首歌": "A song",
   "例：他们大学时常听的那首": "e.g. The song we used to play at university",
   "一句常说的话": "Something often said",
-  "例：走啦，回家": "e.g. Come on, let us go home"
+  "例：走啦，回家": "e.g. Come on, let us go home",
+  "邻居": "A neighbour",
+  "共同的爱好圈子": "The same hobby circle",
+  "一起养宠物": "Raising a pet together",
+  "一句只有你们懂的玩笑": "An inside joke only you two get",
+  "第一次见面在哪、什么季节、谁先注意到谁？慢慢想，那个画面会自己浮上来。": "Where did you first meet, in what season, and who noticed who first? Take your time; the scene will surface on its own.",
+  "例：大二图书馆门口的林荫道，秋天，他隔着人群先看见了她": "e.g. On the tree-lined path by the library in our second year, in autumn, he saw her first through the crowd",
+  "那天有没有一个你到现在还记得的小东西（一本书、一杯饮料、一句话）？它是故事的第一个信物。": "Is there a small thing you still remember from that day—a book, a drink, a sentence? It is the story's first keepsake.",
+  "例：她抱着两本书，其中一本到现在还放在他书架最上面": "e.g. She was holding two books; one still sits on the top of his shelf",
+  "对方做过的一件让你心动的小事，那种\"就是 TA 了\"的瞬间。": "One small thing they did that made your heart skip—the moment you just knew.",
+  "先做了很久朋友，顺其自然在一起": "Friends for a long time first, then naturally together",
+  "一方默默喜欢了很多年": "One of you quietly liked the other for years",
+  "一起追一部剧追到结局": "Watching a show together to the very end",
+  "每年生日雷打不动的惊喜": "A surprise every single birthday",
+  "山顶": "A mountaintop",
+  "老房子 / 故居": "An old house / family home",
+  "额头相抵": "Foreheads touching",
+  "并肩看向台下的亲人": "Standing side by side, looking at family below",
+  "在哪、谁开的口、说了什么？那一刻的天气或气味，还记得吗？": "Where, who spoke first, and what was said? Do you still remember the weather or the smell of that moment?",
+  "例：毕业那天教学楼前，他说以后的路一起走，太阳正好": "e.g. In front of the teaching building on graduation day, he said we would walk on together; the sun was just right",
+  "日常里最\"你们\"的一个画面，一个能反复回看的瞬间。": "A moment that is most 'you two'—one you can replay again and again.",
+  "例：这次，我就在你身边，以后也是": "e.g. This time, I am right beside you—and from now on too",
+  "TA 把你随口一提的事记了好久": "They remembered something you said only in passing for a long time",
+  "和 TA 在一起，你可以安心做自己": "With them, you can simply be yourself",
+  "练习了好几遍要说的话": "Rehearsing what to say many times",
+  "请 TA 最重视的人到场见证": "Inviting the people who matter most to them to witness it",
+  "筹划中最用心或最惊险的一个细节，后来 TA 知道了吗。": "The most thoughtful or nail-biting detail of the planning—did they find out about it later?",
+  "一间有特殊意义的餐厅": "A restaurant with special meaning",
+  "两人常去的江边 / 海边": "The riverside or seaside you often go to",
+  "两个人哭成一团": "Both of you crying together",
+  "TA 说\"我愿意\"": "They said \"I do\"",
+  "养育孩子": "Raising children",
+  "照顾生病的家人": "Caring for a sick family member",
+  "一起扛过买房搬家的累": "Getting through the exhaustion of buying a home and moving",
+  "那段日子怎么过来的，谁做了什么？回头再看，最想感谢对方的是什么。": "How did you get through those days, and who did what? Looking back, what do you most want to thank each other for?",
+  "记得彼此的忌口和小习惯": "Remembering each other's food preferences and little habits",
+  "吵架后总有一个人先低头": "One of you always softens first after a fight",
+  "有没有一个只属于你们俩的小暗号、小称呼或小仪式？": "Is there a little signal, nickname or ritual that belongs only to the two of you?",
+  "例：我管他叫\"队长\"，他管我叫\"小朋友\"": "e.g. I call him \"Captain\" and he calls me \"Little one\"",
+  "一起变老": "Growing old together",
+  "把这辈子慢慢过完": "Slowly finishing this life together",
+  "特别疼我": "Doted on me",
+  "总把好吃的留给我": "Always saved the best food for me",
+  "一个小时候的画面，越具体越好。想起来的时候，心里是暖的。": "A scene from childhood—the more specific the better. The memory itself feels warm.",
+  "第一次送我上学": "First time taking me to school",
+  "学会一项养活全家的本事": "Learning a skill to support the whole family",
+  "对别人也很慷慨": "Generous to others too",
+  "再难也没有倒下过": "Never fell down, no matter how hard it got",
+  "有没有一件 TA 引以为傲、常挂在嘴边的小事？": "Is there a small thing they are proud of and like to mention?",
+  "例：他总说自己当年百米能跑进十二秒": "e.g. He always says he once ran 100 metres in under twelve seconds",
+  "把苦都咽在自己肚子里": "Swallowed all the hardship quietly",
+  "为子女牺牲了自己的梦想": "Gave up their own dreams for their children",
+  "那段日子 TA 是怎么扛过来的，你后来才知道的辛苦是什么。": "How did they hold on through those days? What hardship did you only learn of later?",
+  "谢谢你": "Thank you",
+  "你辛苦了": "You worked so hard",
+  "第一次胎动": "The first kick",
+  "和家人视频分享好消息": "Sharing the good news with family on video call",
+  "一点点布置婴儿房": "Setting up the nursery bit by bit",
+  "看你第一眼就想哭": "Wanting to cry the first time they saw you",
+  "第一次和你对视": "The first eye contact",
+  "出生那天的画面。现在想起来，还像昨天一样清晰。": "The scene of the day you were born. Thinking of it, it is still as clear as yesterday.",
+  "第一次睡整觉": "First night sleeping through",
+  "第一次坐起来": "First time sitting up",
+  "第一颗小牙": "First little tooth",
+  "第一次发生的那天，还有谁在场，大家什么反应？": "On the day it first happened, who else was there and how did everyone react?",
+  "例：全家都凑过来看，外婆笑得直抹眼泪": "e.g. The whole family gathered around; grandma laughed until she teared up",
+  "第一次站起来的瞬间": "The moment they first stood up",
+  "奶声奶气地哼唧": "Babbling in that baby voice",
+  "做最喜欢的自己": "Be whoever you love being",
+  "慢一点也没关系": "It is okay to take it slow",
+  "爸妈的叮嘱": "Advice from parents",
+  "第一次离开家过夜": "First night away from home",
+  "开学前，家人送了你一句什么话，或帮你张罗了什么？": "Before term started, what did your family say to you, or what did they help you pack?",
+  "例：妈妈往行李箱塞了一包家乡的辣酱": "e.g. Mum tucked a jar of hometown chilli sauce into the suitcase",
+  "同学 / 队友": "Classmates / teammates",
+  "一起点过的外卖": "The takeaways you ordered together",
+  "第一次挂科或失利": "First failing grade or defeat",
+  "一个人扛下来的时刻": "A moment you carried alone",
+  "考上心仪的学校": "Getting into the school you wanted",
+  "论文答辩通过": "Passing the thesis defence",
+  "谢谢这几年的自己": "Thank you to who you were these years",
+  "后会有期": "Until we meet again",
+  "老照片里的模样": "The look in old photos",
+  "第一声\"妈妈 / 爸爸\"": "The first \"Mama\" / \"Papa\"",
+  "收集某样东西": "Collecting something",
+  "攒钱买一件心爱之物": "Saving up to buy something cherished",
+  "被否定的一次": "A time of being dismissed",
+  "第一次独自面对失败": "First time facing failure alone",
+  "开始主动分担家务": "Starting to help with chores on their own",
+  "懂得心疼父母": "Learning to care for their parents",
+  "那次长大之后，TA 做了哪件让你特别安心的事？": "After growing up that time, what did they do that really put your mind at ease?",
+  "例：开始每周给外婆打电话，报平安": "e.g. Started calling grandma every week to say they were fine",
+  "做自己就好了": "Just be yourself",
+  "累了就回家": "Come home when you are tired",
+  "带爸妈 / 家人一起去": "Going with parents / family",
+  "说走就走的冲动": "A spur-of-the-moment urge",
+  "在车上睡成一团": "Sleeping in a heap in the vehicle",
+  "一路的聊天和音乐": "Chatting and music all the way",
+  "旅途里有没有一段总被你们提起的笑话或口头禅？": "Is there a joke or catchphrase from the trip that you always bring up?",
+  "例：一到岔路口就齐声喊\"跟着导航走\"": "e.g. At every fork, everyone yelled \"follow the navigation\" together",
+  "语言不通的窘况": "The awkwardness of not speaking the language",
+  "临时改道的新风景": "New scenery after a last-minute detour",
+  "和陌生人的一次相遇": "A chance meeting with a stranger",
+  "一个舍不得离开的地方": "A place you did not want to leave",
+  "把回忆写成了文字": "Writing the memories down",
+  "下一次还要带谁来": "Who to bring along next time",
+  "一眼相中的缘分": "Love at first sight",
+  "自己跑来的流浪小可怜": "A stray that wandered in on its own",
+  "早上准时来舔醒你": "Licking you awake on time every morning",
+  "总爱跟着你转": "Always following you around",
+  "把心爱的东西藏起来": "Hiding its favourite things",
+  "装无辜的演技": "Its Oscar-worthy innocent act",
+  "TA 有没有一个让你又好气又好笑的小习惯？": "Does it have a little habit that both annoys and amuses you?",
+  "例：每次犯错就翻肚皮卖萌，让人下不去手": "e.g. Every time it misbehaves it rolls over adorably, so you cannot stay mad",
+  "接你下班 / 回家": "Greeting you after work / at the door",
+  "生病时寸步不离": "Staying by your side when you were sick",
+  "下辈子还做一家人": "Let us be family again in the next life",
+  "谢谢你陪我的每一天": "Thank you for every day you spent with me",
+  "总把最好的给我": "Always gave me the best",
+  "生病时整夜守着": "Stayed up all night when I was sick",
+  "一个特有的味道": "A particular smell",
+  "一条走了无数遍的路": "A road walked countless times",
+  "那个画面是什么样。闭上眼睛，最先出现的是什么。": "What does that scene look like? Close your eyes—what appears first?",
+  "TA 的唠叨": "Their nagging",
+  "TA 偷偷藏起的心事": "The worries they hid quietly",
+  "腿脚不如从前了": "Not as steady on their feet",
+  "越来越像小孩子": "Becoming more childlike",
+  "现在的 TA 最常做、最让你记挂的一件小事。": "The little thing they now do most often that stays on your mind.",
+  "例：每次挂电话前都要补一句\"记得吃饭\"": "e.g. Before every call ends they add, \"Remember to eat\"",
+  "别太累了": "Do not overwork yourself",
+  "以后我多陪陪你": "I will spend more time with you from now on",
+  "想靠手艺养活自己": "Wanted to make a living by your craft",
+  "看到别人做好，也想试试": "Saw others do it well and wanted to try",
+  "身体撑不住了": "Your body gave out",
+  "怀疑自己选错了": "Doubting you chose wrong",
+  "最难的一次是什么样。当时是怎么给自己打气的。": "What was the hardest time like? How did you encourage yourself?",
+  "靠口碑慢慢熬出来": "Slowly earned your way through word of mouth",
+  "家人的支持": "Support from family",
+  "客户的一句谢谢": "A thank-you from a customer",
+  "团队一起扛过难关": "The team pulling through a hard time together",
+  "有没有一个让你觉得\"值了\"的瞬间？": "Was there a moment that made you feel it was all worth it?",
+  "例：深夜收工，看到门店灯牌还亮着，心里很踏实": "e.g. Finishing late at night and seeing the store sign still lit felt reassuring",
+  "致一起拼过的人": "To everyone who fought alongside you",
+  "把这份事业做下去": "Keep this work going",
+  "想把一件事做到极致": "Wanted to take one thing to the extreme",
+  "想给行业一点不一样": "Wanted to give the industry something different",
+  "第一批用户的信任": "The trust of your first users",
+  "不甘心半途而废": "Could not bear to quit halfway",
+  "一次诚恳的道歉挽回口碑": "An honest apology that won back your reputation",
+  "把细节做到别人挑不出毛病": "Refining details until no one could fault them",
+  "用户把产品送进礼物里": "Users giving your product as a gift",
+  "被同行认可": "Earning respect from peers",
+  "有没有一条让你记了很久的用户留言或故事？": "Is there a user message or story you still remember?",
+  "例：一位阿姨说，只有你们的东西她敢放心给孙子用": "e.g. An auntie said yours is the only thing she trusts for her grandchild",
+  "始终对你诚实": "Always honest with you",
+  "陪你走更远": "Going further with you",
+  "一个只有你们懂的梗 / 暗号": "An inside joke / code word only you two know",
+  "例：柯基「豆豆」，会转圈圈欢迎你回家": "e.g. Our corgi Bean, who spins in circles to welcome you home",
+  "例：学校后门的奶茶店，第一杯都是在那儿喝的": "e.g. The tea shop behind our school, where we had our first drinks",
+  "例：第一次约会的电影票，一直夹在书里": "e.g. Our first-date cinema ticket, still tucked in a book",
+  "例：他们大学时常听的那首，一响就想起对方": "e.g. The song they used to play at university; it makes them think of each other",
+  "例：走啦，回家——最普通也最安心的一句": "e.g. \"Come on, let's go home\"—the most ordinary yet reassuring line",
+  "例：说\"老地方见\"就都懂了": "e.g. Say \"meet at the old place\" and you both understand"
 };
 const tr = text => LANG==='en' ? (EN[text] ?? text) : text;
 const comma=LANG==='en'?', ':'、';
